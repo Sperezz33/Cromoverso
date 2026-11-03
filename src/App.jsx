@@ -55,6 +55,24 @@ function App() {
   }
 
   return (
+    
+    <>
+
+    <main className="pagina">
+      <header className="pagina-encabezado">
+        <h1>taquilla</h1>
+            <p>crea tu cuenta o ingresa para comprar tus entradas</p>
+
+      </header>
+    <div className="pagina-formulario"></div>
+
+      </main>
+
+    </>
+  );
+}
+
+/*
     <div className="sitio">
       <Navbar
         {...datos}
@@ -99,8 +117,8 @@ function App() {
           </section>
         </div>
       </main>
-    </div>
+    </div> 
   );
 }
-
+*/
 export default App;
