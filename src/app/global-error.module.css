@@ -1,0 +1,12 @@
+.pantalla {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: var(--espacio-5);
+  min-height: 100vh;
+}
+
+.logo {
+  height: var(--tamano-insignia-mundo);
+  width: auto;
+}
