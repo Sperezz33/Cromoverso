@@ -1,0 +1,33 @@
+.insignia {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  font: var(--tipo-detalle-etiqueta);
+  letter-spacing: var(--espaciado-detalle-etiqueta);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.icono {
+  display: inline-grid;
+  color: var(--color-rareza, var(--texto-principal));
+}
+
+.chip {
+  padding: var(--espacio-1) var(--espacio-2);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  background: var(--fondo-superficie);
+  color: var(--texto-principal);
+}
+
+.texto {
+  color: var(--texto-secundario);
+}
+
+.extra {
+  font: var(--tipo-detalle-nota);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--texto-secundario);
+}
