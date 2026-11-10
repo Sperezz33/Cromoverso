@@ -1,29 +1,260 @@
+/* Tokens de diseño de Cromoverso, exportados del archivo de Figma. */
+/* Nombres iguales a las variables de Figma: "fondo/pagina" se usa como var(--fondo-pagina). */
+
 :root {
-  --color-fondo: #f8fafc;
-  --color-superficie: #ffffff;
-  --color-texto: #172033;
-  --color-texto-suave: #475569;
-  --color-primario: #1d4ed8;
-  --color-primario-hover: #1e40af;
-  --color-sobre-primario: #ffffff;
-  --color-borde: #53575b;
-  --color-borde-fuerte: #53575b;
-  --color-foco: #7c3aed;
+  /* Color */
+  --fondo-pagina: #fff8ec;
+  --fondo-superficie: #ffffff;
+  --fondo-sutil: #f5eee0;
+  --fondo-inverso: #1a1033;
+  --fondo-inverso-2: #2b1f52;
+  --marca-primario: #6c3bff;
+  --marca-primario-hover: #5527e6;
+  --marca-primario-suave: #ede6ff;
+  --marca-acento: #ffd23f;
+  --marca-acento-suave: #fff3c4;
+  --marca-rosa: #ff4d7a;
+  --texto-principal: #1a1033;
+  --texto-secundario: #4a4166;
+  --texto-terciario: #6b6386;
+  --texto-inverso: #ffffff;
+  --texto-inverso-suave: #c9c1e8;
+  --texto-marca: #5527e6;
+  --borde-sutil: #e8ddc9;
+  --borde-fuerte: #1a1033;
+  --borde-inverso: #40326e;
+  --estado-exito: #1a7f45;
+  --estado-exito-suave: #dff5e7;
+  --estado-alerta: #9a5b00;
+  --estado-alerta-suave: #fff0cc;
+  --estado-error: #d12c1f;
+  --estado-error-suave: #fde6e3;
+  --estado-info: #2457d6;
+  --estado-info-suave: #e3ecff;
+  --mundo-neon: #7c4dff;
+  --mundo-neon-suave: #eee8ff;
+  --mundo-coral: #00a3a3;
+  --mundo-coral-suave: #ddf6f4;
+  --mundo-bosque: #2e9e4f;
+  --mundo-bosque-suave: #e2f5e6;
+  --mundo-forja: #f2541b;
+  --mundo-forja-suave: #ffe7dc;
+  --mundo-orbita: #2563eb;
+  --mundo-orbita-suave: #e1eaff;
+  --mundo-niebla: #c026d3;
+  --mundo-niebla-suave: #f9e3fb;
+  --rareza-comun: #7d7690;
+  --rareza-rara: #2f6bff;
+  --rareza-epica: #8b3dff;
+  --rareza-legendaria: #d99a00;
+  --rareza-legendaria-suave: #fff1c2;
+  /* Medidas */
+  --radio-s: 8px;
+  --radio-m: 12px;
+  --radio-l: 16px;
+  --radio-xl: 24px;
+  --radio-pildora: 999px;
+  --espacio-1: 4px;
+  --espacio-2: 8px;
+  --espacio-3: 12px;
+  --espacio-4: 16px;
+  --espacio-5: 24px;
+  --espacio-6: 32px;
+  --espacio-7: 48px;
+  --espacio-8: 64px;
+  --borde-grosor: 2px;
+  /* Familias tipográficas (Google Fonts) */
+  --fuente-unbounded: "Unbounded", system-ui, sans-serif;
+  --fuente-rubik: "Rubik", system-ui, sans-serif;
+  /* Sombras */
+  --sombra-pop: 4px 4px 0px 0px #1a1033;
+  --sombra-pop-pequena: 2px 2px 0px 0px #1a1033;
+  --sombra-flotante: 0px 16px 40px -8px #1a10332e;
+  --brillo-legendaria: 0px 0px 24px 2px #ffc71a8c;
+}
 
-  --fuente-texto:
-    "Instrument Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --fuente-titulos: Georgia, "Times New Roman", serif;
-  --texto-pequeno: 0.875rem;
-  --texto-base: 1rem;
-  --texto-subtitulo: 1.5rem;
-  --texto-titulo: clamp(2rem, 1.5rem + 2vw, 3rem);
-  --interlineado: 1.6;
+/* Estilos de texto de Figma como clases. */
+.titular-gigante {
+  font-family: var(--fuente-unbounded);
+  font-weight: 900;
+  font-size: 88px;
+  line-height: 92px;
+  letter-spacing: -2px;
+}
+.titular-display {
+  font-family: var(--fuente-unbounded);
+  font-weight: 700;
+  font-size: 56px;
+  line-height: 62px;
+  letter-spacing: -1.5px;
+}
+.titular-h1 {
+  font-family: var(--fuente-unbounded);
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 46px;
+  letter-spacing: -1px;
+}
+.titular-h2 {
+  font-family: var(--fuente-unbounded);
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 34px;
+  letter-spacing: -0.5px;
+}
+.titular-h3 {
+  font-family: var(--fuente-unbounded);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 26px;
+}
+.titular-h4 {
+  font-family: var(--fuente-rubik);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+}
+.dato-cifra {
+  font-family: var(--fuente-unbounded);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 36px;
+  letter-spacing: -0.5px;
+}
+.dato-numero-de-cromo {
+  font-family: var(--fuente-unbounded);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+}
+.cuerpo-g {
+  font-family: var(--fuente-rubik);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+}
+.cuerpo-m {
+  font-family: var(--fuente-rubik);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+.cuerpo-m-fuerte {
+  font-family: var(--fuente-rubik);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+}
+.cuerpo-p {
+  font-family: var(--fuente-rubik);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+}
+.cuerpo-p-fuerte {
+  font-family: var(--fuente-rubik);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+}
+.detalle-nota {
+  font-family: var(--fuente-rubik);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+}
+.detalle-nota-fuerte {
+  font-family: var(--fuente-rubik);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+}
+.detalle-etiqueta {
+  font-family: var(--fuente-rubik);
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.cromo-nombre-g {
+  font-family: var(--fuente-unbounded);
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 22px;
+}
+.cromo-nombre-m {
+  font-family: var(--fuente-unbounded);
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 17px;
+}
+.cromo-nombre-p {
+  font-family: var(--fuente-unbounded);
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 13px;
+}
+.cromo-numero-p {
+  font-family: var(--fuente-unbounded);
+  font-weight: 700;
+  font-size: 9px;
+  line-height: 11px;
+}
 
-  --espacio-1: 0.5rem;
-  --espacio-2: 1rem;
-  --espacio-3: 1.5rem;
-  --espacio-4: 2rem;
-  --espacio-5: 3rem;
-  --radio: 0.5rem;
-  --ancho-contenido: 72rem;
+/* Medidas de diseño tomadas de los frames de Figma (Sprint 1). */
+:root {
+  --ancho-pagina: 1440px;
+  --margen-pagina: var(--espacio-7);
+  --margen-pagina-movil: var(--espacio-4);
+  --alto-navbar: 76px;
+  --alto-navbar-movil: 64px;
+  --alto-control: 44px;
+  --alto-control-pequeno: 36px;
+  --ancho-columna-filtros: 296px;
+  --ancho-tarjeta-mundo: 200px;
+  --ancho-aviso-cookies: 880px;
+  --tamano-icono: 20px;
+  --tamano-icono-pequeno: 16px;
+  --tamano-icono-grande: 24px;
+  --tamano-insignia-mundo: 40px;
+  --grosor-foco: 3px;
+  --separacion-foco: 2px;
+  --duracion-transicion: 150ms;
+  --capa-navbar: 20;
+  --capa-menu-movil: 30;
+  --capa-aviso: 40;
+}
+
+/* Estilos de texto de Figma como variables (familia, peso, tamaño e interlineado). */
+:root {
+  --tipo-titular-gigante: 900 88px / 92px var(--fuente-unbounded);
+  --tipo-titular-display: 700 56px / 62px var(--fuente-unbounded);
+  --tipo-titular-h1: 700 40px / 46px var(--fuente-unbounded);
+  --tipo-titular-h2: 600 28px / 34px var(--fuente-unbounded);
+  --tipo-titular-h3: 600 20px / 26px var(--fuente-unbounded);
+  --tipo-titular-h4: 700 16px / 22px var(--fuente-rubik);
+  --tipo-dato-cifra: 700 32px / 36px var(--fuente-unbounded);
+  --tipo-dato-numero: 700 14px / 16px var(--fuente-unbounded);
+  --tipo-cuerpo-g: 400 18px / 28px var(--fuente-rubik);
+  --tipo-cuerpo-m: 400 16px / 24px var(--fuente-rubik);
+  --tipo-cuerpo-m-fuerte: 600 16px / 24px var(--fuente-rubik);
+  --tipo-cuerpo-p: 400 14px / 20px var(--fuente-rubik);
+  --tipo-cuerpo-p-fuerte: 600 14px / 20px var(--fuente-rubik);
+  --tipo-detalle-nota: 400 12px / 16px var(--fuente-rubik);
+  --tipo-detalle-nota-fuerte: 600 12px / 16px var(--fuente-rubik);
+  --tipo-detalle-etiqueta: 700 11px / 14px var(--fuente-rubik);
+  --tipo-cromo-nombre-g: 600 17px / 22px var(--fuente-unbounded);
+  --tipo-cromo-nombre-m: 600 13px / 17px var(--fuente-unbounded);
+  --tipo-cromo-nombre-p: 600 10px / 13px var(--fuente-unbounded);
+  --tipo-cromo-numero-p: 700 9px / 11px var(--fuente-unbounded);
+
+  --espaciado-titular-gigante: -2px;
+  --espaciado-titular-display: -1.5px;
+  --espaciado-titular-h1: -1px;
+  --espaciado-titular-h2: -0.5px;
+  --espaciado-dato-cifra: -0.5px;
+  --espaciado-detalle-etiqueta: 0.06em;
+
+  --desplazamiento-hover: -2px;
 }

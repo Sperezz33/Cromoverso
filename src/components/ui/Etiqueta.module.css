@@ -1,0 +1,32 @@
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  padding: var(--espacio-1) var(--espacio-2);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  font: var(--tipo-detalle-etiqueta);
+  letter-spacing: var(--espaciado-detalle-etiqueta);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.neutra {
+  background: var(--fondo-superficie);
+  color: var(--texto-principal);
+}
+
+.acento {
+  background: var(--marca-acento);
+  color: var(--texto-principal);
+}
+
+.marca {
+  background: var(--marca-primario-suave);
+  color: var(--texto-marca);
+}
+
+.inversa {
+  background: var(--fondo-inverso);
+  color: var(--texto-inverso);
+}
