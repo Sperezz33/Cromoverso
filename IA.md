@@ -24,7 +24,7 @@ En el contrato de la API confirmé, entre otros comportamientos, que `GET /mundo
 
 Organicé el desarrollo mediante ramas y pull requests independientes para cada historia de usuario, conservando las dependencias entre ellas.
 
-Durante la integración identifiqué que la estrategia de ramas encadenadas no estaba llevando todos los cambios a `main`, contrario a lo que se había previsto inicialmente. El problema se originó porque los pull requests se fusionaron sobre sus respectivas ramas base y estas no se eliminaron después de la integración.
+Durante la integración identifiqué que la estrategia de ramas encadenadas no estaba llevando todos los cambios a `main`. El origen fue una respuesta equivocada de Claude Code: al planear la integración, afirmó que al fusionar el primer pull request GitHub cambiaría automáticamente la rama base de los siguientes a `main`. Eso solo ocurre cuando la rama base se elimina después de la fusión; como las ramas se conservaron, los PR #4 a #8 se fusionaron sobre sus respectivas ramas base.
 
 Al revisar directamente el historial de `main`, comprobé que únicamente se encontraba integrada la primera historia.
 
