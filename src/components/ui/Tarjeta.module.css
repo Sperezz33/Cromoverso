@@ -1,0 +1,31 @@
+.tarjeta {
+  display: block;
+  padding: var(--espacio-4);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-l);
+  background: var(--fondo-superficie);
+  color: var(--texto-principal);
+  box-shadow: var(--sombra-pop);
+  text-decoration: none;
+}
+
+.interactiva {
+  transition:
+    transform var(--duracion-transicion) ease,
+    box-shadow var(--duracion-transicion) ease;
+}
+
+.interactiva:hover {
+  transform: translate(var(--desplazamiento-hover), var(--desplazamiento-hover));
+  box-shadow: var(--sombra-pop), var(--sombra-pop-pequena);
+}
+
+.interactiva:active {
+  transform: none;
+  box-shadow: var(--sombra-pop-pequena);
+}
+
+.interactiva:focus-visible {
+  outline: var(--grosor-foco) solid var(--marca-primario);
+  outline-offset: var(--separacion-foco);
+}

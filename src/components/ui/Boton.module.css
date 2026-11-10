@@ -1,0 +1,88 @@
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-2);
+  min-height: var(--alto-control);
+  padding: var(--espacio-2) var(--espacio-5);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  font: var(--tipo-cuerpo-m-fuerte);
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    transform var(--duracion-transicion) ease,
+    box-shadow var(--duracion-transicion) ease,
+    background-color var(--duracion-transicion) ease;
+}
+
+.pequeno {
+  min-height: var(--alto-control-pequeno);
+  padding: var(--espacio-1) var(--espacio-4);
+  font: var(--tipo-cuerpo-p-fuerte);
+}
+
+.anchoCompleto {
+  width: 100%;
+}
+
+.primario {
+  background: var(--marca-primario);
+  color: var(--texto-inverso);
+}
+
+.secundario {
+  background: var(--fondo-superficie);
+  color: var(--texto-principal);
+}
+
+.acento {
+  background: var(--marca-acento);
+  color: var(--texto-principal);
+}
+
+.inverso {
+  background: var(--fondo-inverso-2);
+  border-color: var(--borde-inverso);
+  color: var(--texto-inverso);
+}
+
+.boton:hover:not(:disabled, [aria-disabled="true"]) {
+  transform: translate(var(--desplazamiento-hover), var(--desplazamiento-hover));
+  box-shadow: var(--sombra-pop-pequena);
+}
+
+.primario:hover:not(:disabled, [aria-disabled="true"]) {
+  background: var(--marca-primario-hover);
+}
+
+.secundario:hover:not(:disabled, [aria-disabled="true"]) {
+  background: var(--marca-primario-suave);
+}
+
+.acento:hover:not(:disabled, [aria-disabled="true"]) {
+  background: var(--marca-acento-suave);
+}
+
+.boton:active:not(:disabled, [aria-disabled="true"]) {
+  transform: none;
+  box-shadow: none;
+}
+
+.boton:focus-visible {
+  outline: var(--grosor-foco) solid var(--marca-primario);
+  outline-offset: var(--separacion-foco);
+}
+
+.inverso:focus-visible {
+  outline-color: var(--marca-acento);
+}
+
+.boton:disabled,
+.boton[aria-disabled="true"] {
+  background: var(--fondo-sutil);
+  border-color: var(--borde-sutil);
+  color: var(--texto-terciario);
+  cursor: not-allowed;
+}

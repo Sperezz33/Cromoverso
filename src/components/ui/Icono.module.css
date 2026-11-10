@@ -1,0 +1,22 @@
+.icono {
+  display: inline-block;
+  flex-shrink: 0;
+  background-color: currentColor;
+  mask: var(--icono) center / contain no-repeat;
+  -webkit-mask: var(--icono) center / contain no-repeat;
+}
+
+.pequeno {
+  width: var(--tamano-icono-pequeno);
+  height: var(--tamano-icono-pequeno);
+}
+
+.normal {
+  width: var(--tamano-icono);
+  height: var(--tamano-icono);
+}
+
+.grande {
+  width: var(--tamano-icono-grande);
+  height: var(--tamano-icono-grande);
+}
