@@ -11,7 +11,13 @@ import {
   type ReactNode,
 } from "react";
 import { cargarTextos } from "@/app/acciones";
-import { COOKIE_IDIOMA, guardarCookie, type Consentimiento } from "@/lib/cookies";
+import {
+  borrarCookie,
+  COOKIE_CONSENTIMIENTO,
+  COOKIE_IDIOMA,
+  guardarCookie,
+  type Consentimiento,
+} from "@/lib/cookies";
 import { traducir, type Valores } from "@/lib/textos";
 import type { IdIdioma, Idioma, Textos } from "@/lib/tipos";
 
@@ -24,6 +30,7 @@ type ValorContexto = {
   cambiandoIdioma: boolean;
   errorIdioma: boolean;
   consentimiento: Consentimiento | null;
+  decidirCookies: (acepta: boolean) => void;
 };
 
 const Contexto = createContext<ValorContexto | null>(null);
@@ -41,9 +48,10 @@ export function ProveedorPreferencias({
   idioma: idiomaInicial,
   idiomas,
   textos: textosIniciales,
-  consentimiento,
+  consentimiento: consentimientoInicial,
   children,
 }: Props) {
+  const [consentimiento, setConsentimiento] = useState(consentimientoInicial);
   const [idioma, setIdioma] = useState(idiomaInicial);
   const [textos, setTextos] = useState(textosIniciales);
   const [errorIdioma, setErrorIdioma] = useState(false);
@@ -72,6 +80,18 @@ export function ProveedorPreferencias({
     [consentimiento],
   );
 
+  const decidirCookies = useCallback(
+    (acepta: boolean) => {
+      const decision: Consentimiento = acepta ? "aceptado" : "rechazado";
+      guardarCookie(COOKIE_CONSENTIMIENTO, decision);
+      // Si rechaza, el sitio sigue igual pero el idioma no queda guardado.
+      if (acepta) guardarCookie(COOKIE_IDIOMA, idioma);
+      else borrarCookie(COOKIE_IDIOMA);
+      setConsentimiento(decision);
+    },
+    [idioma],
+  );
+
   const t = useCallback(
     (ruta: string, valores?: Valores) => traducir(textos, ruta, valores),
     [textos],
@@ -87,6 +107,7 @@ export function ProveedorPreferencias({
       cambiandoIdioma,
       errorIdioma,
       consentimiento,
+      decidirCookies,
     }),
     [
       idioma,
@@ -97,6 +118,7 @@ export function ProveedorPreferencias({
       cambiandoIdioma,
       errorIdioma,
       consentimiento,
+      decidirCookies,
     ],
   );
 
