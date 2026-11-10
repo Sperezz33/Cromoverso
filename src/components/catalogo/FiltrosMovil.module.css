@@ -1,0 +1,43 @@
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+}
+
+.campo {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.lista {
+  appearance: none;
+  min-height: var(--alto-control-pequeno);
+  padding: var(--espacio-1) calc(var(--espacio-4) + var(--tamano-icono-pequeno))
+    var(--espacio-1) var(--espacio-4);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  background: var(--fondo-superficie);
+  font: var(--tipo-cuerpo-p-fuerte);
+  cursor: pointer;
+}
+
+.lista:hover {
+  background: var(--marca-primario-suave);
+}
+
+.lista:focus-visible {
+  outline: var(--grosor-foco) solid var(--marca-primario);
+  outline-offset: var(--separacion-foco);
+}
+
+.lista:disabled {
+  color: var(--texto-terciario);
+  cursor: not-allowed;
+}
+
+.flecha {
+  position: absolute;
+  right: var(--espacio-3);
+  pointer-events: none;
+}
