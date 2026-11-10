@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
-import { obtenerTextos } from "./api";
+import { obtenerIdiomas, obtenerTextos } from "./api";
+import { leerPreferencias } from "./preferencias-servidor";
 import { traducir, type Valores } from "./textos";
-import type { IdIdioma } from "./tipos";
 
 /** Título y descripción de una vista desde textos.paginas.<pagina>.seo. */
 export async function metadatosDePagina(
   pagina: string,
-  idioma: IdIdioma = "es",
   valores?: Valores,
 ): Promise<Metadata> {
-  const { textos } = await obtenerTextos(idioma);
+  const [preferencias, idiomas] = await Promise.all([
+    leerPreferencias(),
+    obtenerIdiomas(),
+  ]);
+  const { textos } = await obtenerTextos(preferencias.idioma ?? idiomas.predeterminado);
   return {
     title: traducir(textos, `paginas.${pagina}.seo.titulo`, valores),
     description: traducir(textos, `paginas.${pagina}.seo.descripcion`, valores),
