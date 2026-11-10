@@ -1,0 +1,21 @@
+.idioma {
+  position: relative;
+  display: inline-flex;
+}
+
+.idioma[aria-busy="true"] {
+  cursor: progress;
+}
+
+.error {
+  position: absolute;
+  top: calc(100% + var(--espacio-1));
+  right: 0;
+  width: max-content;
+  max-width: var(--ancho-columna-filtros);
+  padding: var(--espacio-1) var(--espacio-2);
+  border-radius: var(--radio-s);
+  background: var(--estado-error-suave);
+  color: var(--estado-error);
+  font: var(--tipo-detalle-nota-fuerte);
+}

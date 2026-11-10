@@ -91,3 +91,16 @@
     display: grid;
   }
 }
+
+.idiomaMovil {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+  padding: var(--espacio-4);
+  border-top: var(--borde-grosor) solid var(--borde-fuerte);
+}
+
+.etiquetaMovil {
+  font: var(--tipo-titular-h4);
+}

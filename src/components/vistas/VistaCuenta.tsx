@@ -2,6 +2,7 @@
 
 import { Etiqueta } from "@/components/ui/Etiqueta";
 import { usePreferencias } from "@/contexto/Preferencias";
+import { useTituloDePagina } from "@/hooks/useTituloDePagina";
 import estilos from "./VistaCuenta.module.css";
 
 type Props = {
@@ -17,6 +18,7 @@ type Props = {
 export function VistaCuenta({ pagina, etiqueta }: Props) {
   const { t } = usePreferencias();
   const base = `paginas.${pagina}`;
+  useTituloDePagina(pagina);
 
   return (
     <div className={estilos.vista}>

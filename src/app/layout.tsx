@@ -5,18 +5,27 @@ import { Encabezado } from "@/components/layout/Encabezado";
 import { Pie } from "@/components/layout/Pie";
 import { ID_CONTENIDO, SaltarAlContenido } from "@/components/layout/SaltarAlContenido";
 import { ProveedorPreferencias } from "@/contexto/Preferencias";
-import { obtenerTextos } from "@/lib/api";
-import type { IdIdioma } from "@/lib/tipos";
+import { obtenerIdiomas, obtenerTextos } from "@/lib/api";
+import { leerPreferencias } from "@/lib/preferencias-servidor";
 import { rubik, unbounded } from "@/styles/fuentes";
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
-  const idioma: IdIdioma = "es";
+  const [preferencias, idiomas] = await Promise.all([
+    leerPreferencias(),
+    obtenerIdiomas(),
+  ]);
+  const idioma = preferencias.idioma ?? idiomas.predeterminado;
   const { textos } = await obtenerTextos(idioma);
 
   return (
     <html lang={idioma} className={`${unbounded.variable} ${rubik.variable}`}>
       <body>
-        <ProveedorPreferencias idioma={idioma} textos={textos}>
+        <ProveedorPreferencias
+          idioma={idioma}
+          idiomas={idiomas.datos}
+          textos={textos}
+          consentimiento={preferencias.consentimiento}
+        >
           <SaltarAlContenido />
           <Encabezado />
           <main id={ID_CONTENIDO} tabIndex={-1}>

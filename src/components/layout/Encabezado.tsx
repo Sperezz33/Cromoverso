@@ -7,6 +7,7 @@ import { BotonEnlace } from "@/components/ui/Boton";
 import { Icono } from "@/components/ui/Icono";
 import { usePreferencias } from "@/contexto/Preferencias";
 import { enlacesPrincipales, estaActivo, rutas } from "@/lib/rutas";
+import { Idioma } from "./Idioma";
 import { Marca } from "./Marca";
 import { MenuMovil } from "./MenuMovil";
 import estilos from "./Encabezado.module.css";
@@ -67,6 +68,9 @@ export function Encabezado() {
         </nav>
 
         <div className={estilos.acciones}>
+          <div className={estilos.soloEscritorio}>
+            <Idioma />
+          </div>
           <BotonEnlace href={rutas.ingresar} variante="secundario" tamano="pequeno">
             {t("navbar.botones.ingresar")}
           </BotonEnlace>
@@ -92,7 +96,19 @@ export function Encabezado() {
         </div>
       </div>
 
-      <MenuMovil id={ID_MENU} abierto={abierto} onCerrar={cerrarMenu} />
+      <MenuMovil
+        id={ID_MENU}
+        abierto={abierto}
+        onCerrar={cerrarMenu}
+        extra={
+          <div className={estilos.idiomaMovil}>
+            <span className={estilos.etiquetaMovil} aria-hidden="true">
+              {t("menuMovil.secciones.idioma")}
+            </span>
+            <Idioma tamano="grande" />
+          </div>
+        }
+      />
     </header>
   );
 }
