@@ -2,6 +2,10 @@
 
 Frontend del álbum de héroes Cromoverso, hecho con Next.js (App Router) y TypeScript.
 
+- **Sitio desplegado:** https://cromoverso-sperezz33.vercel.app
+- **API:** https://yanethm-cromoverso-api.fly.dev/api/v1 ([contrato](https://yanethm-cromoverso-api.fly.dev/docs/contrato))
+- **Uso de IA:** ver [IA.md](IA.md)
+
 ## Cómo ejecutarlo
 
 1. Copia `.env.example` como `.env.local`. Ahí va la dirección de la API en `API_URL`.
