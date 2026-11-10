@@ -1,0 +1,5 @@
+/* Une las familias de Google Fonts que carga next/font con los tokens de Figma. */
+:root {
+  --fuente-unbounded: var(--fuente-unbounded-next), "Unbounded", system-ui, sans-serif;
+  --fuente-rubik: var(--fuente-rubik-next), "Rubik", system-ui, sans-serif;
+}
