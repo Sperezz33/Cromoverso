@@ -42,7 +42,7 @@ function cabecerasDePrueba(): Record<string, string> {
   return cabeceras;
 }
 
-async function pedir<T>(ruta: string, segundosEnCache: number): Promise<T> {
+async function pedirUnaVez<T>(ruta: string, segundosEnCache: number): Promise<T> {
   const respuesta = await fetch(`${direccionBase()}${ruta}`, {
     headers: { Accept: "application/json", ...cabecerasDePrueba() },
     next: { revalidate: segundosEnCache },
@@ -60,6 +60,26 @@ async function pedir<T>(ruta: string, segundosEnCache: number): Promise<T> {
   }
 
   return (await respuesta.json()) as T;
+}
+
+/** Esperas antes de cada reintento, en milisegundos. */
+const ESPERAS_REINTENTO = [300, 900];
+
+/** Los 5xx (incluida falla_simulada) y la falta de red pueden ser pasajeros; un 4xx no. */
+function valeLaPenaReintentar(error: unknown) {
+  return !(error instanceof ErrorApi) || error.estado >= 500;
+}
+
+async function pedir<T>(ruta: string, segundosEnCache: number): Promise<T> {
+  for (let intento = 0; ; intento++) {
+    try {
+      return await pedirUnaVez<T>(ruta, segundosEnCache);
+    } catch (error) {
+      const espera = ESPERAS_REINTENTO[intento];
+      if (espera === undefined || !valeLaPenaReintentar(error)) throw error;
+      await new Promise((listo) => setTimeout(listo, espera));
+    }
+  }
 }
 
 const CACHE_TEXTOS = 300;
