@@ -1,0 +1,36 @@
+.estado {
+  display: grid;
+  justify-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-7) var(--espacio-5);
+  text-align: center;
+}
+
+.icono {
+  display: grid;
+  place-items: center;
+  width: var(--alto-control);
+  height: var(--alto-control);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  background: var(--marca-primario-suave);
+  color: var(--texto-marca);
+}
+
+.titulo {
+  font: var(--tipo-titular-h3);
+}
+
+.texto {
+  max-width: calc(var(--ancho-columna-filtros) * 2);
+  font: var(--tipo-cuerpo-m);
+  color: var(--texto-secundario);
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--espacio-3);
+  margin-top: var(--espacio-2);
+}
