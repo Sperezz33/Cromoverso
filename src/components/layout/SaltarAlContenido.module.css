@@ -1,0 +1,19 @@
+.salto {
+  position: absolute;
+  z-index: var(--capa-aviso);
+  top: var(--espacio-2);
+  left: var(--espacio-2);
+  padding: var(--espacio-2) var(--espacio-4);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  background: var(--marca-acento);
+  color: var(--texto-principal);
+  font: var(--tipo-cuerpo-p-fuerte);
+  transform: translateY(calc(-100% - var(--espacio-5)));
+}
+
+.salto:focus-visible {
+  transform: none;
+  outline: var(--grosor-foco) solid var(--marca-primario);
+  outline-offset: var(--separacion-foco);
+}
