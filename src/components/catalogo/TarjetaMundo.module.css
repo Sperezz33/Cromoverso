@@ -1,0 +1,35 @@
+.tarjeta {
+  display: grid;
+  gap: var(--espacio-2);
+  min-width: 0;
+  background: var(--fondo-mundo);
+}
+
+.cabecera {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--espacio-2);
+  margin-bottom: var(--espacio-2);
+}
+
+.insignia {
+  display: grid;
+  place-items: center;
+  width: var(--tamano-insignia-mundo);
+  height: var(--tamano-insignia-mundo);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  background: var(--color-mundo);
+  color: var(--texto-inverso);
+}
+
+.nombre {
+  font: var(--tipo-titular-h4);
+  overflow-wrap: anywhere;
+}
+
+.total {
+  font: var(--tipo-detalle-nota);
+  color: var(--texto-secundario);
+}

@@ -1,0 +1,62 @@
+.tarjeta {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+  min-width: 0;
+  padding: var(--espacio-2);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-l);
+  background: var(--fondo-superficie);
+  color: var(--texto-principal);
+  box-shadow: var(--sombra-pop-pequena);
+  text-decoration: none;
+}
+
+.holografica {
+  box-shadow: var(--sombra-pop-pequena), var(--brillo-legendaria);
+}
+
+.enlace {
+  transition:
+    transform var(--duracion-transicion) ease,
+    box-shadow var(--duracion-transicion) ease;
+}
+
+.enlace:hover {
+  transform: translate(var(--desplazamiento-hover), var(--desplazamiento-hover));
+  box-shadow: var(--sombra-pop);
+}
+
+.enlace:focus-visible {
+  outline: var(--grosor-foco) solid var(--marca-primario);
+  outline-offset: var(--separacion-foco);
+}
+
+.numero {
+  position: absolute;
+  z-index: 1;
+  top: var(--espacio-3);
+  left: var(--espacio-3);
+  padding: 0 var(--espacio-1);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  background: var(--fondo-superficie);
+  font: var(--tipo-cromo-numero-p);
+}
+
+.nombre {
+  margin-top: var(--espacio-1);
+  font: var(--tipo-cromo-nombre-m);
+  overflow-wrap: anywhere;
+}
+
+.tipo {
+  font: var(--tipo-detalle-nota);
+  color: var(--texto-secundario);
+}
+
+.rareza {
+  align-self: flex-start;
+  margin-top: var(--espacio-1);
+}
