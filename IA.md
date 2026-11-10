@@ -1,52 +1,91 @@
-# Uso de IA en el proyecto
+# Uso de herramientas de IA en el proyecto
 
-En el Sprint 1 usé **Claude Code** (Anthropic) como asistente de programación. Lo usé para revisar el contrato de la API, el Figma y el repositorio de referencia; para escribir el código de las seis historias; para probar las vistas en el navegador y para configurar el despliegue. Yo definí el alcance, revisé y fusioné los PR, y comprobé el resultado en el sitio desplegado.
+Durante el Sprint 1 incorporé Claude Code (Anthropic) como herramienta de apoyo dentro de mi flujo de desarrollo. Lo utilicé para agilizar tareas de análisis, implementación, pruebas y despliegue, manteniendo bajo mi responsabilidad la definición del alcance, las decisiones de arquitectura, los criterios de aceptación y la validación de cada funcionalidad.
 
-Cada entrada dice qué le pedí, qué respondió, qué estaba bien o mal y cómo lo verifiqué.
+El proceso no consistió en aceptar automáticamente las soluciones propuestas. Cada implementación fue contrastada con los requisitos del sprint, el diseño de Figma, el contrato de la API y el comportamiento esperado del sistema. Cuando aparecieron inconsistencias, identifiqué sus causas, definí los ajustes necesarios y comprobé que las correcciones resolvieran los problemas.
+
+A continuación, documento algunos casos representativos del proceso.
+
+### 1. Análisis previo de requisitos y referencias
+
+**Fecha:** 9 de noviembre de 2026.
+
+Antes de iniciar la implementación, realicé una revisión cruzada de los criterios del sprint, el contrato de la API, los diseños de Figma y el repositorio de referencia del curso.
+
+Este análisis permitió identificar diferencias importantes entre el material de referencia y las condiciones reales del proyecto: el repositorio utilizaba Vite y JSX, mientras que el desarrollo debía realizarse con Next.js y TypeScript. También se encontraron diferencias en la gestión de cookies, la estructura de los datos y algunas funcionalidades que no formaban parte del alcance solicitado.
+
+En el contrato de la API confirmé, entre otros comportamientos, que `GET /mundos/:id` incluye los cromos especiales y que los filtros no admitidos responden con código 422.
+
+**Validación:** contrasté directamente las respuestas de `GET /mundos/neon` y `GET /cromos?rareza=dorada` con el contrato. A partir de ello, definí el comportamiento del catálogo para solicitar `edicion=album` y evitar la aplicación de filtros no contemplados por la API.
+
+### 2. Revisión de la estrategia de integración con GitHub
+
+**Fecha:** 9 de noviembre de 2026.
+
+Organicé el desarrollo mediante ramas y pull requests independientes para cada historia de usuario, conservando las dependencias entre ellas.
+
+Durante la integración identifiqué que la estrategia de ramas encadenadas no estaba llevando todos los cambios a `main`, contrario a lo que se había previsto inicialmente. El problema se originó porque los pull requests se fusionaron sobre sus respectivas ramas base y estas no se eliminaron después de la integración.
+
+Al revisar directamente el historial de `main`, comprobé que únicamente se encontraba integrada la primera historia.
+
+**Corrección:** estructuré un pull request adicional (#9), destinado a incorporar en `main` los commits de las historias previamente revisadas. No se introdujeron cambios funcionales nuevos; se corrigió la integración del trabajo existente.
+
+A partir de este caso incorporé una comprobación explícita de la rama de destino antes de cada fusión.
+
+### 3. Tratamiento de errores en la aplicación
+
+**Fecha:** 9 de noviembre de 2026.
+
+Implementé los estados de carga y error para las distintas vistas, contemplando los escenarios de fallo en las solicitudes a la API.
+
+Durante las pruebas detecté que la cobertura inicial no contemplaba adecuadamente los errores que afectaban al layout principal, especialmente las solicitudes `GET /textos` y `GET /idiomas`. En esas circunstancias, la aplicación terminaba mostrando la página genérica de error 500 de Next.js.
+
+Para reproducir el escenario utilicé `API_SIMULAR_ERROR=503`, que permite simular respuestas de error mediante la cabecera `X-Simular-Error`.
+
+**Corrección (PR #10):** amplié el tratamiento de errores mediante reintentos breves ante respuestas 5xx, un mecanismo de respaldo para `GET /idiomas` basado en `textos.idioma.opciones` y una pantalla global de error mediante `global-error.tsx`, con una opción para reintentar.
+
+**Validación:** ejecuté pruebas sobre una compilación de producción, tanto en condiciones normales como con la falla simulada, comprobando el comportamiento de recuperación y la presentación de los estados correspondientes.
+
+### 4. Consistencia tipográfica con los tokens de diseño
+
+**Fecha:** 9 de noviembre de 2026.
+
+Al contrastar los componentes base con el sistema de diseño de Figma, identifiqué que, aunque se estaban utilizando los tokens de color, espaciado y bordes, algunos atributos tipográficos todavía estaban definidos directamente en los estilos.
+
+Esto representaba una inconsistencia con el tercer criterio de aceptación, que exige evitar valores definidos manualmente fuera del sistema de tokens.
+
+**Corrección:** incorporé los estilos tipográficos de Figma como variables CSS, entre ellas `--tipo-cuerpo-m` y `--tipo-titular-h2`, y adapté los componentes para consumirlas mediante `font: var(--tipo-...)`.
+
+**Validación:** realicé una revisión de los archivos CSS para localizar valores tipográficos en píxeles y colores hexadecimales definidos fuera de `tokens.css`.
+
+### 5. Configuración y accesibilidad del despliegue
+
+**Fecha:** 9 de noviembre de 2026.
+
+Gestioné la configuración del despliegue en Vercel y verifiqué que la aplicación estuviera disponible públicamente.
+
+Durante la publicación detecté dos inconvenientes: el dominio `cromoverso.vercel.app` ya estaba asociado a otro proyecto y la protección de acceso de Vercel impedía consultar el sitio sin iniciar sesión.
+
+**Corrección:** utilicé el dominio asignado al proyecto, `https://cromoverso-sperezz33.vercel.app`, y ajusté la configuración de autenticación para permitir el acceso público.
+
+**Validación:** comprobé las rutas sin una sesión iniciada, verificando respuestas HTTP 200, y configuré un monitor en UptimeRobot, que confirmó el estado operativo del sitio.
 
 ---
 
-## 1. Revisar el contrato y el material de referencia antes de programar
+### Decisiones de diseño y desarrollo bajo mi criterio
 
-- **Fecha:** 9 de noviembre de 2026
-- **Qué le pedí:** comparar los criterios del sprint con el contrato de la API, el Figma y el repositorio de referencia del curso, y avisarme de lo que no cumpliera.
-- **Qué respondió:** el repositorio de referencia usa Vite y JSX en vez de Next.js con TypeScript. Además, tiene los datos y los textos escritos en el código, cookies con otro nombre (`cromoverso_consentimiento`) y un panel de preferencias que el sprint no pide. En la API encontró que `GET /mundos/:id` trae también `especiales` y que un filtro inválido responde 422.
-- **Cómo lo verifiqué:** consulté yo mismo `GET /mundos/neon` y `GET /cromos?rareza=dorada` y comparé con el contrato. Por eso el catálogo pide `edicion=album` e ignora los filtros que no existen.
+Además de las tareas de implementación, tomé decisiones propias para resolver diferencias entre los requisitos, los diseños y los recursos disponibles:
 
-## 2. Respuesta equivocada: «GitHub cambia solo la base de los PR encadenados»
+- **Consentimiento de cookies:** ajusté los estilos de «Aceptar» y «Rechazar» para que ambos tuvieran el mismo peso visual, atendiendo al segundo criterio de S1-06, aunque Figma presentaba el primero con relleno y el segundo con borde.
 
-- **Fecha:** 9 de noviembre de 2026
-- **Qué le pedí:** organizar el trabajo con una rama y un PR por historia. Como cada historia dependía de la anterior, los PR quedaron encadenados: cada uno apuntaba a la rama de la historia anterior.
-- **Qué respondió (mal):** que al fusionar el primero, GitHub cambiaría solo la base de los siguientes a `main`.
-- **Qué pasó en realidad:** eso solo ocurre si se borra la rama al fusionar, y yo no las borré. Los PR #4 a #8 se fusionaron cada uno en la rama anterior y `main` quedó solo con S1-01.
-- **Cómo se corrigió:** lo noté al revisar `main` antes de desplegar. Abrimos el PR #9, que llevó a `main` los mismos commits ya revisados, sin cambios nuevos. Desde entonces reviso la rama base de cada PR antes de fusionar.
+- **Leyenda de rarezas:** incorporé una leyenda en la página de inicio con iconos, nombres y porcentajes de rareza. Aunque este elemento no aparecía representado en Figma, era necesario para cumplir el primer criterio de S1-03.
 
-## 3. Respuesta incompleta: el sitio se caía si la API fallaba en todas las rutas
+- **Iconografía personalizada:** desarrollé las figuras de ola, hoja, órbita y runa mediante SVG, respetando el estilo de trazo del sistema visual, debido a que los recursos correspondientes no estaban incluidos en el paquete de iconos disponible.
 
-- **Fecha:** 9 de noviembre de 2026
-- **Qué le pedí:** al principio, manejar los estados de carga y de error de cada vista.
-- **Qué respondió:** creó `loading.tsx` y `error.tsx` con los textos de `estados`. Funcionaban cuando fallaba una vista, pero no cubrían el layout principal, que pide `GET /textos` y `GET /idiomas`.
-- **Cómo lo detecté:** probé con `API_SIMULAR_ERROR=503`, que agrega la cabecera `X-Simular-Error`. En vez del estado de error salía la página 500 genérica de Next.js.
-- **Cómo se corrigió (PR #10):** reintentos cortos ante errores 5xx, respaldo para `GET /idiomas` con `textos.idioma.opciones` y una pantalla `global-error.tsx` con «Reintentar». Lo verifiqué en un build de producción con y sin la falla simulada.
+### Consideraciones finales
 
-## 4. Tamaños de letra escritos a mano en los componentes base
+El uso de Claude Code permitió reducir el tiempo dedicado a tareas repetitivas y acelerar la implementación de las historias de usuario. Sin embargo, la herramienta no sustituyó el análisis de requisitos ni la toma de decisiones durante el desarrollo.
 
-- **Fecha:** 9 de noviembre de 2026
-- **Qué le pedí:** crear los componentes base con los tokens de Figma.
-- **Qué respondió:** usó los tokens de color, espacio y radio, pero escribió a mano los tamaños, pesos e interlineados de la letra (`font-size: 16px`, `font-weight: 600`). Eso incumple el criterio 3: ningún valor escrito a mano.
-- **Cómo se corrigió:** se agregaron los estilos de texto de Figma como variables (`--tipo-cuerpo-m`, `--tipo-titular-h2`...) y los componentes pasaron a usar `font: var(--tipo-...)`. Lo verifiqué buscando en los `.css` valores en `px` y colores en hexadecimal fuera de `tokens.css`.
+Los casos documentados muestran que fue necesario contrastar propuestas, detectar comportamientos incorrectos, resolver problemas de integración y adaptar las implementaciones a los criterios reales del proyecto.
 
-## 5. Dirección del despliegue en Vercel
-
-- **Fecha:** 9 de noviembre de 2026
-- **Qué le pedí:** desplegar el proyecto en Vercel con el nombre `cromoverso`.
-- **Qué pasó:** se asumió que el sitio quedaría en `cromoverso.vercel.app`, pero ese dominio ya era de otra persona y daba 404. Además, Vercel había dejado activada la protección por inicio de sesión, así que nadie sin cuenta podía ver el sitio.
-- **Cómo se corrigió:** se usó la dirección del proyecto, `https://cromoverso-sperezz33.vercel.app`, y se desactivó «Vercel Authentication». Lo verifiqué abriendo las rutas sin sesión (todas responden 200) y con UptimeRobot, que marca el monitor en «Up».
-
----
-
-## Decisiones que tomé yo
-
-- En Figma, «Aceptar» va relleno y «Rechazar» con borde. El criterio 2 de S1-06 pide el mismo peso visual, así que los dos usan el mismo estilo.
-- Figma no muestra las rarezas en el inicio, pero el criterio 1 de S1-03 las pide. Las agregué como leyenda con icono, palabra y porcentaje.
-- Las figuras `ola`, `hoja`, `orbita` y `runa` que entrega la API no venían en el paquete de iconos. Las dibujé en SVG con el mismo estilo de trazo.
+La responsabilidad sobre el alcance, las decisiones técnicas, la integración del código y la verificación del producto desplegado permaneció bajo mi criterio y supervisión.
