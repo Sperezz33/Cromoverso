@@ -1,0 +1,21 @@
+.marca {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radio-s);
+}
+
+.logo {
+  height: var(--tamano-insignia-mundo);
+  width: auto;
+}
+
+.marca:focus-visible {
+  outline: var(--grosor-foco) solid var(--marca-primario);
+  outline-offset: var(--separacion-foco);
+}
+
+@media (max-width: 959px) {
+  .logo {
+    height: var(--alto-control-pequeno);
+  }
+}
