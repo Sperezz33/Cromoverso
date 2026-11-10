@@ -8,6 +8,9 @@ export type IdRareza = "comun" | "rara" | "epica" | "legendaria";
 
 export type TipoCromo = "heroe" | "aliado" | "villano";
 
+/** Valores que acepta el filtro `tipo` de GET /cromos (contrato, vista 2). */
+export const TIPOS_DE_CROMO: readonly TipoCromo[] = ["heroe", "aliado", "villano"];
+
 export type Rareza = {
   id: IdRareza;
   nombre: string;

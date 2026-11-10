@@ -1,0 +1,55 @@
+.ilustracion {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-m);
+  background: radial-gradient(
+    circle at 50% 35%,
+    var(--marca-primario-suave),
+    var(--color-cromo) 70%
+  );
+}
+
+.holografico::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    var(--marca-acento-suave),
+    var(--mundo-coral-suave),
+    var(--marca-primario-suave),
+    var(--mundo-niebla-suave)
+  );
+  mix-blend-mode: soft-light;
+}
+
+.silueta {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.halo {
+  fill: var(--fondo-superficie);
+  opacity: 0.25;
+}
+
+.cuerpo {
+  fill: var(--fondo-inverso);
+}
+
+.visor {
+  fill: var(--marca-acento);
+}
+
+.figura {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  bottom: 14%;
+  transform: translateX(-50%);
+  color: var(--marca-acento);
+}
