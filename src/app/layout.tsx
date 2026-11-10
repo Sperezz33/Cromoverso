@@ -2,6 +2,7 @@ import "@/styles/tokens.css";
 import "@/styles/fuentes.css";
 import "./globals.css";
 import { Encabezado } from "@/components/layout/Encabezado";
+import { GestorCookies } from "@/components/layout/GestorCookies";
 import { Pie } from "@/components/layout/Pie";
 import { ID_CONTENIDO, SaltarAlContenido } from "@/components/layout/SaltarAlContenido";
 import { ProveedorPreferencias } from "@/contexto/Preferencias";
@@ -27,6 +28,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           consentimiento={preferencias.consentimiento}
         >
           <SaltarAlContenido />
+          <GestorCookies />
           <Encabezado />
           <main id={ID_CONTENIDO} tabIndex={-1}>
             {children}
