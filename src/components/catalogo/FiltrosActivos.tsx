@@ -5,7 +5,6 @@ import { BotonEnlace } from "@/components/ui/Boton";
 import { Icono } from "@/components/ui/Icono";
 import { usePreferencias } from "@/contexto/Preferencias";
 import { enlaceConFiltros, type Filtros } from "@/lib/filtros";
-import { nombreDeRareza } from "@/lib/rarezas";
 import { rutas } from "@/lib/rutas";
 import type { Rareza } from "@/lib/tipos";
 import estilos from "./FiltrosActivos.module.css";
@@ -20,14 +19,16 @@ type Props = {
 
 /** Un chip con «×» por cada filtro activo y «Quitar filtros». Todo cambia en la URL. */
 export function FiltrosActivos({ idMundo, rarezas, filtros, onQuitar }: Props) {
-  const { t, textos } = usePreferencias();
+  const { t } = usePreferencias();
   const base = "paginas.albumMundo.filtros";
   const rareza = rarezas.find((opcion) => opcion.id === filtros.rareza);
 
   const chips: { clave: keyof Filtros; texto: string }[] = [];
   if (rareza) {
-    const nombre = nombreDeRareza(textos, rareza);
-    chips.push({ clave: "rareza", texto: t(`${base}.rareza.valor`, { rareza: nombre }) });
+    chips.push({
+      clave: "rareza",
+      texto: t(`${base}.rareza.valor`, { rareza: rareza.nombre }),
+    });
   }
   if (filtros.tipo) {
     const nombre = t(`${base}.tipo.opciones.${filtros.tipo}`);
