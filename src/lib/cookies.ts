@@ -9,7 +9,8 @@ export type Consentimiento = "aceptado" | "rechazado";
 /** Seis meses, en segundos. */
 const DURACION = 60 * 60 * 24 * 180;
 
-export const IDIOMAS_VALIDOS: readonly IdIdioma[] = ["es", "en"];
+/** Valores que admite ?idioma= en GET /textos. */
+const IDIOMAS_VALIDOS: readonly IdIdioma[] = ["es", "en"];
 
 export function esIdioma(valor: unknown): valor is IdIdioma {
   return (

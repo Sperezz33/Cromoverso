@@ -5,8 +5,9 @@ import { Encabezado } from "@/components/layout/Encabezado";
 import { GestorCookies } from "@/components/layout/GestorCookies";
 import { Pie } from "@/components/layout/Pie";
 import { ID_CONTENIDO, SaltarAlContenido } from "@/components/layout/SaltarAlContenido";
+import { ProveedorApi } from "@/contexto/Api";
 import { ProveedorPreferencias } from "@/contexto/Preferencias";
-import { obtenerTextos } from "@/lib/api";
+import { configuracionApi, obtenerTextos } from "@/lib/api-servidor";
 import {
   IDIOMA_DE_RESPALDO,
   idiomasDesdeTextos,
@@ -27,20 +28,22 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang={idioma} className={`${unbounded.variable} ${rubik.variable}`}>
       <body>
-        <ProveedorPreferencias
-          idioma={idioma}
-          idiomas={idiomas?.datos ?? idiomasDesdeTextos(textos)}
-          textos={textos}
-          consentimiento={preferencias.consentimiento}
-        >
-          <SaltarAlContenido />
-          <GestorCookies />
-          <Encabezado />
-          <main id={ID_CONTENIDO} tabIndex={-1}>
-            {children}
-          </main>
-          <Pie />
-        </ProveedorPreferencias>
+        <ProveedorApi configuracion={configuracionApi()}>
+          <ProveedorPreferencias
+            idioma={idioma}
+            idiomas={idiomas?.datos ?? idiomasDesdeTextos(textos)}
+            textos={textos}
+            consentimiento={preferencias.consentimiento}
+          >
+            <SaltarAlContenido />
+            <GestorCookies />
+            <Encabezado />
+            <main id={ID_CONTENIDO} tabIndex={-1}>
+              {children}
+            </main>
+            <Pie />
+          </ProveedorPreferencias>
+        </ProveedorApi>
       </body>
     </html>
   );

@@ -5,13 +5,18 @@ import { useId } from "react";
 import { Icono } from "@/components/ui/Icono";
 import { usePreferencias } from "@/contexto/Preferencias";
 import { enlaceConFiltros, type Filtros } from "@/lib/filtros";
-import { TIPOS_DE_CROMO, type Rareza, type TipoCromo } from "@/lib/tipos";
+import type { Rareza } from "@/lib/tipos";
 import estilos from "./FiltrosMovil.module.css";
 
-type Props = { idMundo: string; rarezas: Rareza[]; filtros: Filtros };
+type Props = {
+  idMundo: string;
+  rarezas: Rareza[];
+  tipos: string[];
+  filtros: Filtros;
+};
 
 /** En móvil los filtros son dos listas desplegables; el cambio también va a la URL. */
-export function FiltrosMovil({ idMundo, rarezas, filtros }: Props) {
+export function FiltrosMovil({ idMundo, rarezas, tipos, filtros }: Props) {
   const { t } = usePreferencias();
   const router = useRouter();
   const idRareza = useId();
@@ -51,12 +56,10 @@ export function FiltrosMovil({ idMundo, rarezas, filtros }: Props) {
           id={idTipo}
           className={estilos.lista}
           value={filtros.tipo ?? ""}
-          onChange={(evento) =>
-            cambiar({ tipo: (evento.target.value as TipoCromo) || undefined })
-          }
+          onChange={(evento) => cambiar({ tipo: evento.target.value || undefined })}
         >
           <option value="">{t("paginas.albumMundo.filtros.tipo.todos")}</option>
-          {TIPOS_DE_CROMO.map((tipo) => (
+          {tipos.map((tipo) => (
             <option key={tipo} value={tipo}>
               {t("paginas.albumMundo.filtros.tipo.valor", {
                 tipo: t(`paginas.albumMundo.filtros.tipo.opciones.${tipo}`),

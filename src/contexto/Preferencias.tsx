@@ -10,7 +10,7 @@ import {
   useTransition,
   type ReactNode,
 } from "react";
-import { cargarTextos } from "@/app/acciones";
+import { useConfiguracionApi } from "@/contexto/Api";
 import {
   borrarCookie,
   COOKIE_CONSENTIMIENTO,
@@ -18,8 +18,10 @@ import {
   guardarCookie,
   type Consentimiento,
 } from "@/lib/cookies";
+import { pedir } from "@/lib/peticion";
+import { rutasApi } from "@/lib/rutas-api";
 import { traducir, type Valores } from "@/lib/textos";
-import type { IdIdioma, Idioma, Textos } from "@/lib/tipos";
+import type { IdIdioma, Idioma, RespuestaTextos, Textos } from "@/lib/tipos";
 
 type ValorContexto = {
   idioma: IdIdioma;
@@ -51,6 +53,7 @@ export function ProveedorPreferencias({
   consentimiento: consentimientoInicial,
   children,
 }: Props) {
+  const api = useConfiguracionApi();
   const [consentimiento, setConsentimiento] = useState(consentimientoInicial);
   const [idioma, setIdioma] = useState(idiomaInicial);
   const [textos, setTextos] = useState(textosIniciales);
@@ -66,8 +69,8 @@ export function ProveedorPreferencias({
     (nuevo: IdIdioma) => {
       iniciarCambio(async () => {
         try {
-          const nuevosTextos = await cargarTextos(nuevo);
-          setTextos(nuevosTextos);
+          const respuesta = await pedir<RespuestaTextos>(api, rutasApi.textos(nuevo));
+          setTextos(respuesta.textos);
           setIdioma(nuevo);
           setErrorIdioma(false);
           // Solo se recuerda el idioma si la persona aceptó las cookies.
@@ -77,7 +80,7 @@ export function ProveedorPreferencias({
         }
       });
     },
-    [consentimiento],
+    [api, consentimiento],
   );
 
   const decidirCookies = useCallback(

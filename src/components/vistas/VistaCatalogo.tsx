@@ -6,30 +6,27 @@ import { FiltrosMovil } from "@/components/catalogo/FiltrosMovil";
 import { InsigniaRareza } from "@/components/catalogo/InsigniaRareza";
 import { numeroDeCromo, TarjetaCromo } from "@/components/catalogo/TarjetaCromo";
 import { Estado } from "@/components/estados/Estado";
+import { EstadoPeticiones } from "@/components/estados/EstadoPeticiones";
 import { BotonEnlace } from "@/components/ui/Boton";
 import { Icono } from "@/components/ui/Icono";
 import { usePreferencias } from "@/contexto/Preferencias";
+import type { Peticion } from "@/hooks/usePeticion";
 import { useTituloDePagina } from "@/hooks/useTituloDePagina";
 import { enlaceConFiltros, type Filtros } from "@/lib/filtros";
 import { rutas } from "@/lib/rutas";
-import {
-  TIPOS_DE_CROMO,
-  type Cromo,
-  type Mundo,
-  type MundoConCromos,
-  type Rareza,
-} from "@/lib/tipos";
+import type { Cromo, ListaPaginada, Mundo, MundoConCromos, Rareza } from "@/lib/tipos";
 import estilos from "./VistaCatalogo.module.css";
 
 type Props = {
   mundo: MundoConCromos;
   mundos: Mundo[];
   rarezas: Rareza[];
-  cromos: Cromo[];
+  tipos: string[];
+  cromos: Peticion<ListaPaginada<Cromo>>;
   filtros: Filtros;
 };
 
-export function VistaCatalogo({ mundo, mundos, rarezas, cromos, filtros }: Props) {
+export function VistaCatalogo({ mundo, mundos, rarezas, tipos, cromos, filtros }: Props) {
   const { t } = usePreferencias();
   useTituloDePagina("albumMundo", { mundo: mundo.nombre });
 
@@ -175,7 +172,7 @@ export function VistaCatalogo({ mundo, mundos, rarezas, cromos, filtros }: Props
                   </span>
                 </Link>
               </li>
-              {TIPOS_DE_CROMO.map((tipo) => {
+              {tipos.map((tipo) => {
                 const activo = filtros.tipo === tipo;
                 return (
                   <li key={tipo}>
@@ -206,18 +203,33 @@ export function VistaCatalogo({ mundo, mundos, rarezas, cromos, filtros }: Props
 
         <section className={estilos.album} aria-labelledby="titulo-cromos">
           <div className={estilos.barra}>
-            <h2 id="titulo-cromos" className={estilos.resultados} aria-live="polite">
-              {t(`${base}.filtros.cantidad`, { cantidad: cromos.length })}
+            <h2
+              id="titulo-cromos"
+              className={cromos.datos ? estilos.resultados : "solo-lectores"}
+              aria-live="polite"
+            >
+              {cromos.datos
+                ? t(`${base}.filtros.cantidad`, {
+                    cantidad: cromos.datos.paginacion.total,
+                  })
+                : t(cromos.error ? "estados.error.titulo" : "estados.cargando")}
             </h2>
             <div className={estilos.soloMovil}>
-              <FiltrosMovil idMundo={mundo.id} rarezas={rarezas} filtros={filtros} />
+              <FiltrosMovil
+                idMundo={mundo.id}
+                rarezas={rarezas}
+                tipos={tipos}
+                filtros={filtros}
+              />
             </div>
             <span className={estilos.orden}>
               {t(`${base}.orden.etiqueta`, { orden: t(`${base}.orden.opciones.numero`) })}
             </span>
           </div>
 
-          {cromos.length === 0 ? (
+          {!cromos.datos ? (
+            <EstadoPeticiones peticiones={[cromos]} />
+          ) : cromos.datos.datos.length === 0 ? (
             <Estado
               icono="filtro"
               titulo={t(`${base}.vacio.titulo`)}
@@ -229,7 +241,7 @@ export function VistaCatalogo({ mundo, mundos, rarezas, cromos, filtros }: Props
             </Estado>
           ) : (
             <ul className={estilos.rejilla}>
-              {cromos.map((cromo) => (
+              {cromos.datos.datos.map((cromo) => (
                 <li key={cromo.id}>
                   <TarjetaCromo cromo={cromo} rareza={rarezaDe(cromo.rareza)} />
                 </li>

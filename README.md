@@ -30,7 +30,9 @@ npm run dev
 
 - `src/app/`: rutas de Next.js.
 - `src/components/ui/`: componentes base (botón, campo, etiqueta, tarjeta, selector de idioma, aviso de cookies).
-- `src/lib/api.ts`: cliente de la API. La dirección sale de `API_URL`.
+- `src/lib/peticion.ts`: cliente de la API (errores y reintentos). La dirección sale de `API_URL`.
+- `src/hooks/usePeticion.ts`: pide los mundos, las rarezas y los cromos desde el navegador, directo a la API. Cada petición se ve en la pestaña Network.
+- `src/lib/api-servidor.ts`: lo que se pide en el servidor: los textos e idiomas de la primera carga y los metadatos.
 - `src/styles/tokens.css`: tokens exportados de Figma (colores, tipografía, espacios, radios y sombras). Los componentes solo usan estas variables.
 - `public/iconos/`: iconos SVG del sistema de diseño. Toman el color del texto.
 

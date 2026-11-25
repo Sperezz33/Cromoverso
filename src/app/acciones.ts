@@ -1,6 +1,6 @@
 "use server";
 
-import { obtenerTextos } from "@/lib/api";
+import { obtenerTextos } from "@/lib/api-servidor";
 import { esIdioma } from "@/lib/cookies";
 import type { IdIdioma, Textos } from "@/lib/tipos";
 

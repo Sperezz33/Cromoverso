@@ -14,10 +14,7 @@ type Props = { mundo: Mundo; numero: number };
 /** Un mundo del álbum con su total de cromos. Lleva a su catálogo. */
 export function TarjetaMundo({ mundo, numero }: Props) {
   const { t } = usePreferencias();
-  const estilo = {
-    "--color-mundo": mundo.color,
-    "--fondo-mundo": `var(--mundo-${mundo.id}-suave, var(--fondo-superficie))`,
-  } as CSSProperties;
+  const estilo = { "--color-mundo": mundo.color } as CSSProperties;
 
   return (
     <Tarjeta href={rutas.mundo(mundo.id)} className={estilos.tarjeta} style={estilo}>

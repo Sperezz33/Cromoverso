@@ -172,6 +172,7 @@
 }
 
 .orden {
+  margin-left: auto;
   padding: var(--espacio-1) var(--espacio-4);
   border: var(--borde-grosor) solid var(--borde-fuerte);
   border-radius: var(--radio-pildora);

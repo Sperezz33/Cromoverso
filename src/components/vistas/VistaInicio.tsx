@@ -3,39 +3,38 @@
 import { InsigniaRareza } from "@/components/catalogo/InsigniaRareza";
 import { TarjetaCromo } from "@/components/catalogo/TarjetaCromo";
 import { TarjetaMundo } from "@/components/catalogo/TarjetaMundo";
+import { EstadoPeticiones } from "@/components/estados/EstadoPeticiones";
 import { BotonEnlace } from "@/components/ui/Boton";
 import { Etiqueta } from "@/components/ui/Etiqueta";
 import { Icono } from "@/components/ui/Icono";
 import { usePreferencias } from "@/contexto/Preferencias";
+import { useListaCompleta, usePeticion } from "@/hooks/usePeticion";
 import { useTituloDePagina } from "@/hooks/useTituloDePagina";
 import { rutas } from "@/lib/rutas";
-import type { Cromo, Mundo, Rareza } from "@/lib/tipos";
+import { rutasApi } from "@/lib/rutas-api";
+import type { Cromo, Lista, Mundo, Rareza } from "@/lib/tipos";
 import estilos from "./VistaInicio.module.css";
-
-type Props = {
-  mundos: Mundo[];
-  rarezas: Rareza[];
-  /** Cromos holográficos para el abanico de la portada (puede venir vacío). */
-  destacados: Cromo[];
-  /** Cromos legendarios de todos los mundos (puede venir vacío). */
-  legendarios: Cromo[];
-  /** paginacion.total de GET /cromos?rareza=legendaria. */
-  totalLegendarios: number;
-};
 
 const ID_MUNDOS = "mundos";
 
-export function VistaInicio({
-  mundos,
-  rarezas,
-  destacados,
-  legendarios,
-  totalLegendarios,
-}: Props) {
+/** Cartas que caben en el abanico de la portada según el diseño. */
+const CARTAS_DEL_ABANICO = 3;
+
+/** Los mundos, las rarezas y los cromos se piden a la API desde el navegador. */
+export function VistaInicio() {
   const { t } = usePreferencias();
   useTituloDePagina("inicio");
-  const primerMundo = mundos[0];
-  const rarezaLegendaria = rarezas.find((rareza) => rareza.id === "legendaria");
+
+  const mundos = usePeticion<Lista<Mundo>>(rutasApi.mundos);
+  const rarezas = usePeticion<Lista<Rareza>>(rutasApi.rarezas);
+  const legendarios = useListaCompleta<Cromo>(rutasApi.cromos({ rareza: "legendaria" }));
+
+  const primerMundo = mundos.datos?.datos[0];
+  const rarezaDe = (id: string) =>
+    rarezas.datos?.datos.find((rareza) => rareza.id === id);
+  const destacados = legendarios.datos?.datos
+    .filter((cromo) => cromo.holografico)
+    .slice(0, CARTAS_DEL_ABANICO);
 
   return (
     <>
@@ -62,21 +61,27 @@ export function VistaInicio({
             </p>
           </div>
 
-          {destacados.length > 0 && (
-            <div className={estilos.abanico}>
-              <Etiqueta variante="acento" icono="destellos" className={estilos.guardiana}>
-                {t("paginas.inicio.hero.etiquetas.guardiana")}
-              </Etiqueta>
-              {destacados.map((cromo) => (
-                <TarjetaCromo
-                  key={cromo.id}
-                  cromo={cromo}
-                  conEnlace={false}
-                  className={estilos.carta}
-                />
-              ))}
-            </div>
-          )}
+          <div className={estilos.abanico}>
+            {destacados && destacados.length > 0 && (
+              <>
+                <Etiqueta
+                  variante="acento"
+                  icono="destellos"
+                  className={estilos.guardiana}
+                >
+                  {t("paginas.inicio.hero.etiquetas.guardiana")}
+                </Etiqueta>
+                {destacados.map((cromo) => (
+                  <TarjetaCromo
+                    key={cromo.id}
+                    cromo={cromo}
+                    conEnlace={false}
+                    className={estilos.carta}
+                  />
+                ))}
+              </>
+            )}
+          </div>
         </div>
       </section>
 
@@ -103,51 +108,67 @@ export function VistaInicio({
             )}
           </div>
 
-          <ul
-            className={estilos.rarezas}
-            aria-label={t("formularios.campos.rareza.label")}
-          >
-            {rarezas.map((rareza) => (
-              <li key={rareza.id}>
-                <InsigniaRareza
-                  rareza={rareza}
-                  extra={t("general.formatos.porcentaje", { valor: rareza.porcentaje })}
-                />
-              </li>
-            ))}
-          </ul>
+          {mundos.datos && rarezas.datos ? (
+            <>
+              <ul
+                className={estilos.rarezas}
+                aria-label={t("formularios.campos.rareza.label")}
+              >
+                {rarezas.datos.datos.map((rareza) => (
+                  <li key={rareza.id}>
+                    <InsigniaRareza
+                      rareza={rareza}
+                      extra={t("general.formatos.porcentaje", {
+                        valor: rareza.porcentaje,
+                      })}
+                    />
+                  </li>
+                ))}
+              </ul>
 
-          <ul className={estilos.listaMundos}>
-            {mundos.map((mundo, indice) => (
-              <li key={mundo.id}>
-                <TarjetaMundo mundo={mundo} numero={indice + 1} />
-              </li>
-            ))}
-          </ul>
+              <ul className={estilos.listaMundos}>
+                {mundos.datos.datos.map((mundo, indice) => (
+                  <li key={mundo.id}>
+                    <TarjetaMundo mundo={mundo} numero={indice + 1} />
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <EstadoPeticiones peticiones={[mundos, rarezas]} />
+          )}
         </div>
       </section>
-      {legendarios.length > 0 && (
-        <section className={estilos.legendarios} aria-labelledby="titulo-legendarios">
-          <div className="contenedor">
-            <h2 id="titulo-legendarios" className={estilos.tituloSeccion}>
-              {t("paginas.ranking.tabla.etiquetas.legendarias", {
-                cantidad: totalLegendarios,
-              })}
-            </h2>
-            <ul className={estilos.listaLegendarios}>
-              {legendarios.map((cromo) => (
-                <li key={cromo.id}>
-                  <TarjetaCromo
-                    cromo={cromo}
-                    rareza={rarezaLegendaria}
-                    tamano="mediano"
-                  />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-      )}
+
+      <section
+        className={estilos.legendarios}
+        aria-labelledby={legendarios.datos && "titulo-legendarios"}
+      >
+        <div className="contenedor">
+          {legendarios.datos ? (
+            <>
+              <h2 id="titulo-legendarios" className={estilos.tituloSeccion}>
+                {t("paginas.ranking.tabla.etiquetas.legendarias", {
+                  cantidad: legendarios.datos.paginacion.total,
+                })}
+              </h2>
+              <ul className={estilos.listaLegendarios}>
+                {legendarios.datos.datos.map((cromo) => (
+                  <li key={cromo.id}>
+                    <TarjetaCromo
+                      cromo={cromo}
+                      rareza={rarezaDe(cromo.rareza)}
+                      tamano="mediano"
+                    />
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <EstadoPeticiones peticiones={[legendarios]} />
+          )}
+        </div>
+      </section>
     </>
   );
 }

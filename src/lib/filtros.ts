@@ -1,24 +1,29 @@
 import { rutas } from "./rutas";
-import { TIPOS_DE_CROMO, type Rareza, type TipoCromo } from "./tipos";
+import { buscarTexto } from "./textos";
+import type { Rareza, Textos } from "./tipos";
 
-export type Filtros = { rareza?: string; tipo?: TipoCromo };
+export type Filtros = { rareza?: string; tipo?: string };
 
-type Parametros = Record<string, string | string[] | undefined>;
-
-function primero(valor: string | string[] | undefined) {
-  return Array.isArray(valor) ? valor[0] : valor;
+/** Los tipos de cromo salen de las opciones del filtro que entrega GET /textos. */
+export function tiposDeCromo(textos: Textos): string[] {
+  const opciones = buscarTexto(textos, "paginas.albumMundo.filtros.tipo.opciones");
+  return opciones && typeof opciones !== "string" ? Object.keys(opciones) : [];
 }
 
 /**
  * Lee ?rareza=&tipo= de la URL. Un valor que no existe se ignora, así la API
  * no responde 422 y la vista muestra todos los cromos.
  */
-export function leerFiltros(parametros: Parametros, rarezas: Rareza[]): Filtros {
-  const rareza = primero(parametros.rareza);
-  const tipo = primero(parametros.tipo);
+export function leerFiltros(
+  parametros: Pick<URLSearchParams, "get">,
+  rarezas: Rareza[],
+  tipos: string[],
+): Filtros {
+  const rareza = parametros.get("rareza");
+  const tipo = parametros.get("tipo");
   return {
-    rareza: rarezas.some((opcion) => opcion.id === rareza) ? rareza : undefined,
-    tipo: TIPOS_DE_CROMO.find((opcion) => opcion === tipo),
+    rareza: rarezas.find((opcion) => opcion.id === rareza)?.id,
+    tipo: tipos.find((opcion) => opcion === tipo),
   };
 }
 
