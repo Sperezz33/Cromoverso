@@ -60,3 +60,16 @@
   align-self: flex-start;
   margin-top: var(--espacio-1);
 }
+
+/* Tamaños de la tarjeta: cambian el nombre con los tokens tipográficos del cromo. */
+.pequeno .nombre {
+  font: var(--tipo-cromo-nombre-p);
+}
+
+.mediano .nombre {
+  font: var(--tipo-cromo-nombre-m);
+}
+
+.grande .nombre {
+  font: var(--tipo-cromo-nombre-g);
+}
