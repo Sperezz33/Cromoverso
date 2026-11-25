@@ -21,6 +21,8 @@ type PropsBoton = Comunes &
 type PropsEnlace = Comunes & {
   href: string;
   deshabilitado?: boolean;
+  /** false: no sube al inicio de la página al navegar. */
+  scroll?: boolean;
   onClick?: () => void;
 };
 
@@ -84,6 +86,7 @@ export function Boton({
 export function BotonEnlace({
   href,
   deshabilitado,
+  scroll,
   onClick,
   variante,
   tamano,
@@ -108,7 +111,7 @@ export function BotonEnlace({
   }
 
   return (
-    <Link className={clase} href={href} onClick={onClick}>
+    <Link className={clase} href={href} scroll={scroll} onClick={onClick}>
       {contenido}
     </Link>
   );
