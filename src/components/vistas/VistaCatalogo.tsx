@@ -248,7 +248,7 @@ export function VistaCatalogo({ mundo, mundos, rarezas, tipos, cromos, filtros }
               titulo={t("estados.vacio.titulo")}
               texto={t(`${base}.vacio.texto`)}
             >
-              <BotonEnlace href={rutas.mundo(mundo.id)} variante="secundario">
+              <BotonEnlace href={rutas.mundo(mundo.id)} variante="primario">
                 {t(`${base}.vacio.botones.limpiar`)}
               </BotonEnlace>
             </Estado>

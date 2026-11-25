@@ -61,15 +61,39 @@
   margin-top: var(--espacio-1);
 }
 
-/* Tamaños de la tarjeta: cambian el nombre con los tokens tipográficos del cromo. */
-.pequeno .nombre {
-  font: var(--tipo-cromo-nombre-p);
+/* La carta del detalle: el mismo dibujo con otras medidas. */
+.grande {
+  max-width: var(--ancho-cromo-grande);
+  margin-inline: auto;
+  padding: var(--relleno-cromo-grande);
+  border-width: var(--borde-cromo-grande);
+  border-radius: var(--radio-cromo-grande);
 }
 
-.mediano .nombre {
-  font: var(--tipo-cromo-nombre-m);
+.grande .numero {
+  top: calc(var(--relleno-cromo-grande) + var(--espacio-2));
+  left: calc(var(--relleno-cromo-grande) + var(--espacio-2));
 }
 
 .grande .nombre {
   font: var(--tipo-cromo-nombre-g);
+}
+
+@media (min-width: 960px) {
+  .grande .numero {
+    top: calc(var(--relleno-cromo-grande) + var(--espacio-3));
+    left: calc(var(--relleno-cromo-grande) + var(--espacio-3));
+    padding: var(--espacio-1) var(--espacio-3);
+    font: var(--tipo-cromo-numero-grande);
+  }
+
+  .grande .nombre {
+    margin: var(--espacio-3) var(--espacio-2) 0;
+    font: var(--tipo-cromo-nombre-grande);
+  }
+
+  .grande .tipo {
+    margin: 0 var(--espacio-2) var(--espacio-3);
+    font: var(--tipo-cromo-tipo-grande);
+  }
 }

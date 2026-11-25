@@ -148,11 +148,7 @@ export function VistaInicio() {
               <ul className={estilos.listaLegendarios}>
                 {legendarios.datos.datos.map((cromo) => (
                   <li key={cromo.id}>
-                    <TarjetaCromo
-                      cromo={cromo}
-                      rareza={rarezaDe(cromo.rareza)}
-                      tamano="mediano"
-                    />
+                    <TarjetaCromo cromo={cromo} rareza={rarezaDe(cromo.rareza)} />
                   </li>
                 ))}
               </ul>
