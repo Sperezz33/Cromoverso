@@ -214,6 +214,8 @@
   --ancho-columna-filtros: 296px;
   --ancho-tarjeta-mundo: 200px;
   --ancho-aviso-cookies: 880px;
+  /* No viene de Figma: alto reservado mientras la API entrega las cartas. */
+  --alto-minimo-abanico: 260px;
   --tamano-icono: 20px;
   --tamano-icono-pequeno: 16px;
   --tamano-icono-grande: 24px;

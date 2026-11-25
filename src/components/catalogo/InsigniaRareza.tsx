@@ -13,7 +13,10 @@ type Props = {
 
 /** La rareza siempre se muestra con su icono y su palabra (GET /rarezas), nunca solo con color. */
 export function InsigniaRareza({ rareza, forma = "chip", extra, className }: Props) {
-  const estilo = { "--color-rareza": rareza.color } as CSSProperties;
+  // Token de Figma; si la API agrega una rareza sin token, se usa su propio color.
+  const estilo = {
+    "--color-rareza": `var(--rareza-${rareza.id}, ${rareza.color})`,
+  } as CSSProperties;
   return (
     <span
       className={[estilos.insignia, estilos[forma], className].filter(Boolean).join(" ")}

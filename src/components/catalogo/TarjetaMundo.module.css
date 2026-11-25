@@ -2,7 +2,7 @@
   display: grid;
   gap: var(--espacio-2);
   min-width: 0;
-  background: color-mix(in srgb, var(--color-mundo) 14%, var(--fondo-superficie));
+  background: var(--fondo-mundo);
 }
 
 .cabecera {
