@@ -221,6 +221,8 @@
   --ancho-carta-detalle: 316px;
   --ancho-nombre-atributo: 80px;
   --alto-barra-atributo: 14px;
+  /* Iniciar sesión (Sprint 2). */
+  --ancho-formulario: 440px;
   --tamano-icono: 20px;
   --tamano-icono-pequeno: 16px;
   --tamano-icono-grande: 24px;

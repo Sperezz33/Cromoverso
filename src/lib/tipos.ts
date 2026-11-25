@@ -44,6 +44,15 @@ export type Cromo = {
 
 export type MundoConCromos = Mundo & { cromos: Cromo[]; especiales: Cromo[] };
 
+export type Usuario = {
+  id: string;
+  alias: string;
+  nombre: string;
+  correo: string;
+  correoVerificado: boolean;
+  rol: string;
+};
+
 export type Paginacion = {
   pagina: number;
   porPagina: number;

@@ -6,14 +6,14 @@ import { useTituloDePagina } from "@/hooks/useTituloDePagina";
 import estilos from "./VistaCuenta.module.css";
 
 type Props = {
-  /** Clave de la página en textos.paginas: "ingresar" o "registro". */
-  pagina: "ingresar" | "registro";
+  /** Clave de la página en textos.paginas. */
+  pagina: "registro";
   etiqueta: string;
 };
 
 /**
- * Presentación de Iniciar sesión y Crear cuenta. Los formularios se construyen en
- * los siguientes sprints; en este sprint la navegación ya llega a estas rutas.
+ * Presentación de Crear cuenta. El formulario se construye en el sprint 3; la
+ * navegación ya llega a esta ruta.
  */
 export function VistaCuenta({ pagina, etiqueta }: Props) {
   const { t } = usePreferencias();

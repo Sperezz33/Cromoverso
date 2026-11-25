@@ -1,4 +1,4 @@
-import { VistaCuenta } from "@/components/vistas/VistaCuenta";
+import { VistaIngresar } from "@/components/vistas/VistaIngresar";
 import { metadatosDePagina } from "@/lib/seo";
 
 export function generateMetadata() {
@@ -6,5 +6,5 @@ export function generateMetadata() {
 }
 
 export default function Ingresar() {
-  return <VistaCuenta pagina="ingresar" etiqueta="temporada" />;
+  return <VistaIngresar />;
 }

@@ -36,6 +36,15 @@
   padding-left: calc(var(--espacio-4) + var(--tamano-icono) + var(--espacio-2));
 }
 
+.entrada:has(+ .accion) {
+  padding-right: calc(var(--alto-control) + var(--espacio-1));
+}
+
+.accion {
+  position: absolute;
+  right: 0;
+}
+
 .entrada::placeholder {
   color: var(--texto-terciario);
 }

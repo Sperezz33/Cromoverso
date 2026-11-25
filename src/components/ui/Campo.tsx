@@ -1,16 +1,27 @@
-import { useId, type InputHTMLAttributes } from "react";
+import { useId, type ComponentProps, type ReactNode } from "react";
 import { Icono } from "./Icono";
 import estilos from "./Campo.module.css";
 
-type Props = InputHTMLAttributes<HTMLInputElement> & {
+type Props = ComponentProps<"input"> & {
   etiqueta: string;
   ayuda?: string;
   error?: string;
   icono?: string;
+  /** Botón al final del campo (por ejemplo, ver la contraseña). */
+  accion?: ReactNode;
 };
 
 /** Campo de texto con su etiqueta, ayuda y mensaje de error asociados. */
-export function Campo({ etiqueta, ayuda, error, icono, id, className, ...resto }: Props) {
+export function Campo({
+  etiqueta,
+  ayuda,
+  error,
+  icono,
+  accion,
+  id,
+  className,
+  ...resto
+}: Props) {
   const generado = useId();
   const idCampo = id ?? generado;
   const idAyuda = ayuda ? `${idCampo}-ayuda` : undefined;
@@ -31,6 +42,7 @@ export function Campo({ etiqueta, ayuda, error, icono, id, className, ...resto }
           aria-describedby={descripcion || undefined}
           {...resto}
         />
+        {accion && <span className={estilos.accion}>{accion}</span>}
       </div>
       {ayuda && (
         <p id={idAyuda} className={estilos.ayuda}>
