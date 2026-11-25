@@ -7,24 +7,32 @@ export function generateMetadata() {
   return metadatosDePagina("inicio");
 }
 
-/** Cromos holográficos para la portada. Si fallan, la portada se muestra sin ellos. */
-async function cromosDestacados(): Promise<Cromo[]> {
+/** Cromos legendarios de los seis mundos. Si fallan, el inicio se muestra sin ellos. */
+async function cromosLegendarios(): Promise<Cromo[]> {
   try {
-    const { datos } = await obtenerCromos({ rareza: "legendaria", porPagina: 20 });
-    return datos.filter((cromo) => cromo.holografico).slice(0, 3);
+    const { datos } = await obtenerCromos({ rareza: "legendaria", porPagina: 50 });
+    return datos;
   } catch {
     return [];
   }
 }
 
 export default async function Inicio() {
-  const [mundos, rarezas, destacados] = await Promise.all([
+  const [mundos, rarezas, legendarios] = await Promise.all([
     obtenerMundos(),
     obtenerRarezas(),
-    cromosDestacados(),
+    cromosLegendarios(),
   ]);
 
+  // El abanico de la portada usa tres de los legendarios holográficos.
+  const destacados = legendarios.filter((cromo) => cromo.holografico).slice(0, 3);
+
   return (
-    <VistaInicio mundos={mundos.datos} rarezas={rarezas.datos} destacados={destacados} />
+    <VistaInicio
+      mundos={mundos.datos}
+      rarezas={rarezas.datos}
+      destacados={destacados}
+      legendarios={legendarios}
+    />
   );
 }

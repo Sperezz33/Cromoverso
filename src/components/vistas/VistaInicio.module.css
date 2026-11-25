@@ -126,11 +126,26 @@
   gap: var(--espacio-4);
 }
 
+.legendarios {
+  padding-bottom: var(--espacio-8);
+}
+
+.listaLegendarios {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--espacio-4);
+  margin-top: var(--espacio-5);
+}
+
 .soloMovil {
   display: none;
 }
 
 @media (max-width: 1199px) {
+  .listaLegendarios {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
   .listaMundos {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -168,6 +183,10 @@
 
   .mundos {
     padding-block: var(--espacio-6);
+  }
+
+  .listaLegendarios {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .listaMundos {
