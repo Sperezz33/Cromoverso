@@ -10,16 +10,19 @@ import type {
   RespuestaTextos,
 } from "./tipos";
 
+function direccionApi(): string {
+  const base = process.env.API_URL;
+  if (!base) {
+    throw new Error("Falta la variable de entorno API_URL (revisa .env.example).");
+  }
+  return base.replace(/\/+$/, "");
+}
+
 /**
  * Lee API_URL en el servidor. El layout se la pasa al navegador, que pide
  * directamente a la API los mundos, los cromos, las rarezas y los textos.
  */
 export function configuracionApi(): ConfiguracionApi {
-  const base = process.env.API_URL;
-  if (!base) {
-    throw new Error("Falta la variable de entorno API_URL (revisa .env.example).");
-  }
-
   // Cabeceras para ver los estados de carga y de error (solo si se definen).
   const cabeceras: Record<string, string> = {};
   if (process.env.API_SIMULAR_LATENCIA) {
@@ -29,14 +32,17 @@ export function configuracionApi(): ConfiguracionApi {
     cabeceras["X-Simular-Error"] = process.env.API_SIMULAR_ERROR;
   }
 
-  return { base: base.replace(/\/+$/, ""), cabeceras };
+  return { base: direccionApi(), cabeceras };
 }
 
 const CACHE_TEXTOS = 300;
 const CACHE_CATALOGO = 60;
 
+/** Sin las cabeceras de prueba: con los textos cargados se ven los estados de cada vista. */
 function pedirEnServidor<T>(ruta: string, segundosEnCache: number) {
-  return pedir<T>(configuracionApi(), ruta, { next: { revalidate: segundosEnCache } });
+  return pedir<T>({ base: direccionApi(), cabeceras: {} }, ruta, {
+    next: { revalidate: segundosEnCache },
+  });
 }
 
 export function obtenerIdiomas() {

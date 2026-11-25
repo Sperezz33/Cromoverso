@@ -1,0 +1,57 @@
+.fondo {
+  display: grid;
+  justify-items: center;
+  padding: var(--espacio-7) var(--margen-pagina-movil);
+  background: var(--fondo-inverso);
+}
+
+.panel {
+  display: grid;
+  grid-template-columns: var(--ancho-carta-detalle) minmax(0, 1fr);
+  align-items: start;
+  gap: var(--espacio-6);
+  width: 100%;
+  max-width: var(--ancho-panel-detalle);
+  padding: var(--espacio-6);
+  border-radius: var(--radio-xl);
+  background: var(--fondo-superficie);
+}
+
+.carta {
+  aspect-ratio: 5 / 6;
+}
+
+.datos {
+  display: grid;
+  gap: var(--espacio-4);
+}
+
+.etiquetas {
+  width: 60%;
+  height: var(--espacio-5);
+}
+
+.nombre {
+  width: 80%;
+  height: var(--espacio-7);
+}
+
+.poder {
+  height: var(--espacio-8);
+}
+
+.atributos {
+  height: var(--ancho-tarjeta-mundo);
+}
+
+@media (max-width: 767px) {
+  .fondo {
+    padding: var(--espacio-7) 0 0;
+  }
+
+  .panel {
+    grid-template-columns: minmax(0, 1fr);
+    padding: var(--espacio-8) var(--margen-pagina-movil) var(--espacio-6);
+    border-radius: var(--radio-xl) var(--radio-xl) 0 0;
+  }
+}

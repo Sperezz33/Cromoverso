@@ -1,6 +1,7 @@
 "use client";
 
 import { notFound } from "next/navigation";
+import { EsqueletoDetalle } from "@/components/estados/EsqueletoDetalle";
 import { EstadoPeticiones } from "@/components/estados/EstadoPeticiones";
 import { usePeticion } from "@/hooks/usePeticion";
 import { ErrorApi } from "@/lib/peticion";
@@ -22,9 +23,11 @@ export function DetalleDeCromo({ id }: Props) {
 
   if (!cromo.datos || !rarezas.datos) {
     return (
-      <div className="contenedor">
-        <EstadoPeticiones peticiones={[cromo, rarezas]} nivel="h1" />
-      </div>
+      <EstadoPeticiones
+        peticiones={[cromo, rarezas]}
+        nivel="h1"
+        cargando={<EsqueletoDetalle />}
+      />
     );
   }
 

@@ -38,4 +38,4 @@ npm run dev
 
 ## Estados de carga y error
 
-Para verlos en desarrollo, define en `.env.local` `API_SIMULAR_LATENCIA=2000` o `API_SIMULAR_ERROR=503`. Se envían a la API como las cabeceras `X-Simular-Latencia` y `X-Simular-Error`.
+Para verlos en desarrollo, define en `.env.local` `API_SIMULAR_LATENCIA=2000` o `API_SIMULAR_ERROR=503`. Se envían como las cabeceras `X-Simular-Latencia` y `X-Simular-Error` en las peticiones que hace el navegador (los mundos, los cromos, las rarezas y el cambio de idioma). Los textos de la primera carga se piden sin ellas, para poder ver los estados de cada vista.
