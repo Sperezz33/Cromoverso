@@ -70,6 +70,44 @@ Durante la publicación detecté dos inconvenientes: el dominio `cromoverso.verc
 
 **Validación:** comprobé las rutas sin una sesión iniciada, verificando respuestas HTTP 200, y configuré un monitor en UptimeRobot, que confirmó el estado operativo del sitio.
 
+### 6. Sección de cromos legendarios en el inicio
+
+**Fecha:** 24 de noviembre de 2026.
+
+Para la historia de la sustentación pedí a Claude Code el código de una sección con los legendarios de todos los mundos, reutilizando la tarjeta de cromo en tamaño mediano. Claude Code escribió el código.
+
+**Respuesta equivocada de la IA:** la primera versión incumplía dos criterios. El total salía de contar las tarjetas (`legendarios.length`) en vez de `paginacion.total`, y en móvil la lista quedaba en dos columnas en vez de desplazarse en horizontal.
+
+**Corrección (PR #13):** al comparar el código con el texto de la historia, Claude Code señaló las dos fallas y las corrigió.
+
+**Validación:** Claude Code comprobó en el navegador, a 390 px, que se desplaza la lista y no la página, y que el total coincide con la API (14 en la API de sustentación).
+
+### 7. Peticiones a la API desde el navegador
+
+**Fecha:** 24 de noviembre de 2026.
+
+En la revisión, la profesora señaló que en la pestaña Network no aparecían las llamadas a la API y que había valores escritos en el código. La primera versión, hecha con Claude Code, pedía todos los datos en el servidor (Server Components), así que las llamadas existían pero el navegador no las mostraba.
+
+Claude Code explicó la causa y propuso alternativas. Elegí pedir desde el navegador los datos del inicio y del catálogo, y los textos al cambiar de idioma, sin modificar `API_URL` ni la configuración de Vercel. Claude Code escribió la implementación.
+
+**Corrección (PR #14):** hook `usePeticion` con estados de carga y error, reintentos y cancelación. Los tipos de cromo y los totales pasaron a salir de la API. También se dejó de enviar `edicion=album` (caso 1), porque `GET /cromos` devuelve solo el álbum si no se indica la edición.
+
+**Respuesta equivocada de la IA:** Claude Code también cambió los tokens de Figma del icono de las rarezas y del fondo de los mundos por colores calculados con la API, y dejó dos números a mano en el CSS. Después señaló que iba contra S1-01 y S1-03, y le pedí corregirlo en un PR aparte (rama `fix/colores-figma`).
+
+**Error durante el cambio:** en la primera versión, si fallaba `GET /cromos`, el título de resultados seguía diciendo «Cargando…». Claude Code lo detectó al simular una respuesta 503 y lo corrigió antes de abrir el PR.
+
+**Validación:** Claude Code probó en el navegador, con la API de sustentación, las peticiones de cada vista, los filtros por URL, los filtros inválidos, un mundo inexistente, el cambio de idioma y la recuperación con «Reintentar», además de lint, tipos, formato y compilación.
+
+### 8. US-CRO-S1-08: contador y quitar filtros
+
+**Fecha:** 24 de noviembre de 2026.
+
+Entre las opciones que planteó Claude Code, elegí armar el contador con textos de la API («6 de 20 cromos»). Claude Code escribió el contador, los chips y «Quitar filtros» (PR #15).
+
+**Respuesta equivocada de la IA:** Claude Code también tradujo los nombres de las rarezas al cambiar a inglés y lo presentó como una corrección. Al releer las historias señaló que iba contra S1-04 (la palabra de la rareza sale de `GET /rarezas`) y S1-05 (los datos del catálogo no se traducen). Le pedí deshacerlo, y el cambio se revirtió antes de fusionar el PR.
+
+**Validación:** Claude Code comprobó en el navegador la URL al poner y quitar cada filtro, la apertura directa de `/mundos/coral?rareza=rara`, los textos en español e inglés, el estado vacío y la vista de 390 px.
+
 ---
 
 ### Decisiones de diseño y desarrollo bajo mi criterio
