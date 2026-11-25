@@ -42,9 +42,12 @@ export function VistaInicio() {
             <h1 id="titulo-inicio" className={estilos.titulo}>
               {t("paginas.inicio.hero.titulo")}
             </h1>
-            <p className={`${estilos.subtitulo} ${estilos.soloMovil}`}>
-              {t("paginas.inicio.hero.subtituloMovil")}
-            </p>
+            {/* Invita a registrarse: no aplica con la sesión iniciada. */}
+            {esVisitante && (
+              <p className={`${estilos.subtitulo} ${estilos.soloMovil}`}>
+                {t("paginas.inicio.hero.subtituloMovil")}
+              </p>
+            )}
             <div className={estilos.botones}>
               {esVisitante && (
                 <BotonEnlace href={rutas.registro} variante="acento" icono="usuario">
