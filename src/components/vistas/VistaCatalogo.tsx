@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import type { CSSProperties } from "react";
+import { useRef, type CSSProperties } from "react";
+import { FiltrosActivos } from "@/components/catalogo/FiltrosActivos";
 import { FiltrosMovil } from "@/components/catalogo/FiltrosMovil";
 import { InsigniaRareza } from "@/components/catalogo/InsigniaRareza";
 import { numeroDeCromo, TarjetaCromo } from "@/components/catalogo/TarjetaCromo";
@@ -30,6 +31,7 @@ export function VistaCatalogo({ mundo, mundos, rarezas, tipos, cromos, filtros }
   const { t } = usePreferencias();
   useTituloDePagina("albumMundo", { mundo: mundo.nombre });
 
+  const tituloCromos = useRef<HTMLHeadingElement>(null);
   const base = "paginas.albumMundo";
   const numeroMundo = mundos.findIndex((otro) => otro.id === mundo.id) + 1;
   const rarezaDe = (id: string) => rarezas.find((rareza) => rareza.id === id);
@@ -205,12 +207,15 @@ export function VistaCatalogo({ mundo, mundos, rarezas, tipos, cromos, filtros }
           <div className={estilos.barra}>
             <h2
               id="titulo-cromos"
+              ref={tituloCromos}
+              tabIndex={-1}
               className={cromos.datos ? estilos.resultados : "solo-lectores"}
               aria-live="polite"
             >
               {cromos.datos
-                ? t(`${base}.filtros.cantidad`, {
+                ? t("general.formatos.deTotal", {
                     cantidad: cromos.datos.paginacion.total,
+                    total: t(`${base}.filtros.cantidad`, { cantidad: mundo.totalCromos }),
                   })
                 : t(cromos.error ? "estados.error.titulo" : "estados.cargando")}
             </h2>
@@ -226,6 +231,13 @@ export function VistaCatalogo({ mundo, mundos, rarezas, tipos, cromos, filtros }
               {t(`${base}.orden.etiqueta`, { orden: t(`${base}.orden.opciones.numero`) })}
             </span>
           </div>
+
+          <FiltrosActivos
+            idMundo={mundo.id}
+            rarezas={rarezas}
+            filtros={filtros}
+            onQuitar={() => tituloCromos.current?.focus()}
+          />
 
           {!cromos.datos ? (
             <EstadoPeticiones peticiones={[cromos]} />
