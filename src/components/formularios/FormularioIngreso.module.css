@@ -3,6 +3,19 @@
   gap: var(--espacio-4);
 }
 
+.campos {
+  display: grid;
+  gap: var(--espacio-4);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.aviso:focus {
+  outline: none;
+}
+
 .opciones {
   display: flex;
   flex-wrap: wrap;

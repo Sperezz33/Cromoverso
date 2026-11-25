@@ -86,3 +86,25 @@
   color: var(--texto-terciario);
   cursor: not-allowed;
 }
+
+.boton[data-cargando="true"] {
+  background: var(--marca-primario-suave);
+  border-color: var(--borde-fuerte);
+  color: var(--texto-principal);
+  cursor: progress;
+}
+
+.giro {
+  width: var(--tamano-icono);
+  height: var(--tamano-icono);
+  border: var(--grosor-foco) solid currentcolor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: girar var(--duracion-giro) linear infinite;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(1turn);
+  }
+}
