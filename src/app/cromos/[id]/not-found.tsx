@@ -10,6 +10,8 @@ export default function CromoNoEncontrado() {
   const base = "paginas.detalleCromo.noEncontrado";
   return (
     <div className="contenedor">
+      {/* not-found no tiene generateMetadata: React sube este título al <head>. */}
+      <title>{t(`${base}.titulo`)}</title>
       <Estado
         icono="buscar"
         nivel="h1"

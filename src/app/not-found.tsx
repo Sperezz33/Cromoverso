@@ -9,6 +9,8 @@ export default function NoEncontrado() {
   const { t } = usePreferencias();
   return (
     <div className="contenedor">
+      {/* not-found no tiene generateMetadata: React sube este título al <head>. */}
+      <title>{t("estados.noEncontrado.titulo")}</title>
       <Estado
         icono="buscar"
         nivel="h1"
