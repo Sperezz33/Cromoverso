@@ -90,7 +90,9 @@ En la revisión, la profesora señaló que en la pestaña Network no aparecían 
 
 Claude Code explicó la causa y propuso alternativas. Elegí pedir desde el navegador los datos del inicio y del catálogo, y los textos al cambiar de idioma, sin modificar `API_URL` ni la configuración de Vercel. Claude Code escribió la implementación.
 
-**Corrección (PR #14):** hook `usePeticion` con estados de carga y error, reintentos y cancelación. Los tipos de cromo, los totales y los colores de rarezas y mundos pasaron a salir de la API. También se dejó de enviar `edicion=album` (caso 1), porque `GET /cromos` devuelve solo el álbum si no se indica la edición.
+**Corrección (PR #14):** hook `usePeticion` con estados de carga y error, reintentos y cancelación. Los tipos de cromo y los totales pasaron a salir de la API. También se dejó de enviar `edicion=album` (caso 1), porque `GET /cromos` devuelve solo el álbum si no se indica la edición.
+
+**Respuesta equivocada de la IA:** Claude Code también cambió los tokens de Figma del icono de las rarezas y del fondo de los mundos por colores calculados con la API, y dejó dos números a mano en el CSS. Después señaló que iba contra S1-01 y S1-03, y le pedí corregirlo en un PR aparte (rama `fix/colores-figma`).
 
 **Error durante el cambio:** en la primera versión, si fallaba `GET /cromos`, el título de resultados seguía diciendo «Cargando…». Claude Code lo detectó al simular una respuesta 503 y lo corrigió antes de abrir el PR.
 
