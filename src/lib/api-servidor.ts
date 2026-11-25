@@ -1,6 +1,7 @@
 import { pedir, type ConfiguracionApi } from "./peticion";
 import { rutasApi } from "./rutas-api";
 import type {
+  Cromo,
   IdIdioma,
   Lista,
   Mundo,
@@ -48,6 +49,10 @@ export function obtenerTextos(idioma: IdIdioma) {
 
 export function obtenerMundos() {
   return pedirEnServidor<Lista<Mundo>>(rutasApi.mundos, CACHE_CATALOGO);
+}
+
+export function obtenerCromo(id: string) {
+  return pedirEnServidor<Cromo>(rutasApi.cromo(id), CACHE_CATALOGO);
 }
 
 export function obtenerMundo(id: string) {
