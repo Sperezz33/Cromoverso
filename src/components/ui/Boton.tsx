@@ -15,8 +15,10 @@ type Apariencia = {
 
 type Comunes = Apariencia & { icono?: string; children: ReactNode };
 
-type PropsBoton = Comunes &
-  Omit<ButtonHTMLAttributes<HTMLButtonElement>, "className" | "children">;
+type PropsBoton = Comunes & {
+  /** Muestra el giro y no responde, pero conserva el foco. */
+  cargando?: boolean;
+} & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "className" | "children">;
 
 type PropsEnlace = Comunes & {
   href: string;
@@ -65,6 +67,7 @@ export function Boton({
   anchoCompleto,
   className,
   icono,
+  cargando = false,
   children,
   type = "button",
   ...resto
@@ -73,8 +76,11 @@ export function Boton({
     <button
       className={clases({ variante, tamano, anchoCompleto, className })}
       type={type}
+      aria-disabled={cargando || undefined}
+      data-cargando={cargando || undefined}
       {...resto}
     >
+      {cargando && <span className={estilos.giro} aria-hidden="true" />}
       <Contenido icono={icono} tamano={tamano}>
         {children}
       </Contenido>

@@ -4,12 +4,20 @@ export type ConfiguracionApi = {
   cabeceras: Record<string, string>;
 };
 
+type DetalleError = {
+  /** Mensaje por campo en los errores `validacion`. */
+  campos?: Record<string, unknown>;
+  /** Segundos de Retry-After, si la API lo envía. */
+  espera?: number;
+};
+
 /** Error con la forma del contrato: { error: { codigo, mensaje, campos } }. */
 export class ErrorApi extends Error {
   constructor(
     readonly estado: number,
     readonly codigo: string,
     mensaje: string,
+    readonly detalle: DetalleError = {},
   ) {
     super(mensaje);
     this.name = "ErrorApi";
@@ -29,12 +37,17 @@ export async function pedirUnaVez<T>(
 
   if (!respuesta.ok) {
     const cuerpo = (await respuesta.json().catch(() => null)) as {
-      error?: { codigo?: string; mensaje?: string };
+      error?: { codigo?: string; mensaje?: string; campos?: Record<string, unknown> };
     } | null;
+    const espera = Number(respuesta.headers.get("Retry-After"));
     throw new ErrorApi(
       respuesta.status,
       cuerpo?.error?.codigo ?? "error_interno",
       cuerpo?.error?.mensaje ?? `HTTP ${respuesta.status}`,
+      {
+        campos: cuerpo?.error?.campos,
+        espera: espera > 0 ? Math.ceil(espera) : undefined,
+      },
     );
   }
 
