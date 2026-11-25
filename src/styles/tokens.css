@@ -218,7 +218,12 @@
   --alto-minimo-abanico: 260px;
   /* Detalle de un cromo (Sprint 2). */
   --ancho-panel-detalle: 994px;
-  --ancho-carta-detalle: 316px;
+  --ancho-carta-detalle: min(368px, 40%);
+  /* Cromo con tamano="grande" (CRO-A). */
+  --ancho-cromo-grande: 300px;
+  --borde-cromo-grande: 4px;
+  --radio-cromo-grande: 21px;
+  --relleno-cromo-grande: 10px;
   --ancho-nombre-atributo: 80px;
   --alto-barra-atributo: 14px;
   /* Iniciar sesión (Sprint 2). */
@@ -260,6 +265,9 @@
   --tipo-cromo-nombre-m: 600 13px / 17px var(--fuente-unbounded);
   --tipo-cromo-nombre-p: 600 10px / 13px var(--fuente-unbounded);
   --tipo-cromo-numero-p: 700 9px / 11px var(--fuente-unbounded);
+  --tipo-cromo-nombre-grande: 600 23px / 29px var(--fuente-unbounded);
+  --tipo-cromo-tipo-grande: 400 20px / 24px var(--fuente-rubik);
+  --tipo-cromo-numero-grande: 700 20px / 24px var(--fuente-unbounded);
 
   --espaciado-titular-gigante: -2px;
   --espaciado-titular-display: -1.5px;

@@ -57,7 +57,10 @@ async function pedirPaginas<T>(
   ruta: string,
   opciones: RequestInit,
 ): Promise<ListaPaginada<T>> {
-  const primera = await pedir<ListaPaginada<T>>(api, ruta, opciones);
+    const primera = await pedir<ListaPaginada<T>>(api, ruta, {
+    ...opciones,
+    headers: { "X-Simular-Latencia": "2000" },
+  });
   const faltantes = Array.from(
     { length: Math.max(0, primera.paginacion.paginas - 1) },
     (_, indice) => indice + 2,

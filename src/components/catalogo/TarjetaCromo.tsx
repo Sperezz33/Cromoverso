@@ -11,13 +11,10 @@ import estilos from "./TarjetaCromo.module.css";
 type Props = {
   cromo: Cromo;
   rareza?: Rareza;
-  /** Sin enlace en el abanico decorativo del inicio. */
   conEnlace?: boolean;
-  /** Tamaño del nombre con los tokens --tipo-cromo-nombre-p/m/g. */
-  tamano?: "pequeno" | "mediano" | "grande";
+  tamano?: "normal" | "grande";
   className?: string;
 };
-
 export function numeroDeCromo(numero: number) {
   return String(numero).padStart(3, "0");
 }
@@ -27,7 +24,7 @@ export function TarjetaCromo({
   cromo,
   rareza,
   conEnlace = true,
-  tamano = "mediano",
+  tamano = "normal",
   className,
 }: Props) {
   const { t } = usePreferencias();
