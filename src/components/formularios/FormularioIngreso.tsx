@@ -25,6 +25,9 @@ type Problema =
   | { tipo: "demasiadosIntentos"; segundos: number }
   | { tipo: "otro"; codigo: string };
 
+/** Aviso al llegar aquí porque la sesión venció. */
+const SESION_VENCIDA: Problema = { tipo: "otro", codigo: "no_autenticado" };
+
 /** Rutas de los textos de error: así cambian de idioma con el resto de la vista. */
 type ErroresDeCampo = { correo?: string; clave?: string };
 
@@ -54,7 +57,7 @@ function aErroresDeCampo(error: unknown): ErroresDeCampo {
 
 export function FormularioIngreso() {
   const { t, textos } = usePreferencias();
-  const { ingresar } = useSesion();
+  const { ingresar, vencida } = useSesion();
   const [correo, setCorreo] = useState("");
   const [clave, setClave] = useState("");
   const [mantener, setMantener] = useState(true);
@@ -70,8 +73,10 @@ export function FormularioIngreso() {
 
   const bloqueado = segundos > 0;
   // Al terminar la espera, el aviso de demasiados intentos deja de ser cierto.
-  const problemaVisible =
-    problema?.tipo === "demasiadosIntentos" && !bloqueado ? null : problema;
+  const esperaCumplida = problema?.tipo === "demasiadosIntentos" && !bloqueado;
+  const problemaVisible = esperaCumplida
+    ? null
+    : (problema ?? (vencida && !enviando ? SESION_VENCIDA : null));
 
   // Al bloquear, los campos pierden el foco: pasa al aviso y vuelve al desbloquear.
   useEffect(() => {

@@ -51,6 +51,8 @@ export async function pedirUnaVez<T>(
     );
   }
 
+  // 204: la API hizo lo pedido y no hay nada que leer.
+  if (respuesta.status === 204) return undefined as T;
   return (await respuesta.json()) as T;
 }
 

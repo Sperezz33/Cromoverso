@@ -22,6 +22,10 @@ export async function guardarToken(token: string, mantener: boolean) {
   });
 }
 
+export async function borrarToken() {
+  (await cookies()).delete(COOKIE_SESION);
+}
+
 type Opciones = { token?: string | null; cuerpo?: unknown };
 
 /** Llama a /sesion de la API desde el servidor. null si la API no respondió. */

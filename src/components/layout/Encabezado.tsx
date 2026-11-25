@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { MenuCuenta } from "@/components/cuenta/MenuCuenta";
 import { BotonEnlace } from "@/components/ui/Boton";
 import { Icono } from "@/components/ui/Icono";
 import { usePreferencias } from "@/contexto/Preferencias";
+import { useSesion } from "@/contexto/Sesion";
 import { enlacesPrincipales, estaActivo, rutas } from "@/lib/rutas";
 import { Idioma } from "./Idioma";
 import { Marca } from "./Marca";
@@ -16,6 +18,7 @@ const ID_MENU = "menu-movil";
 
 export function Encabezado() {
   const { t } = usePreferencias();
+  const { usuario, cargando } = useSesion();
   const rutaActual = usePathname();
   const [abierto, setAbierto] = useState(false);
   const botonMenu = useRef<HTMLButtonElement>(null);
@@ -71,17 +74,28 @@ export function Encabezado() {
           <div className={estilos.soloEscritorio}>
             <Idioma />
           </div>
-          <BotonEnlace href={rutas.ingresar} variante="secundario" tamano="pequeno">
-            {t("navbar.botones.ingresar")}
-          </BotonEnlace>
-          <BotonEnlace
-            href={rutas.registro}
-            variante="primario"
-            tamano="pequeno"
-            className={estilos.soloEscritorio}
-          >
-            {t("navbar.botones.crearCuenta")}
-          </BotonEnlace>
+          {/* En móvil la cuenta está dentro del menú. */}
+          {usuario && (
+            <div className={estilos.soloEscritorio}>
+              <MenuCuenta usuario={usuario} />
+            </div>
+          )}
+          {cargando && <span className={estilos.cuentaCargando} aria-hidden="true" />}
+          {!usuario && !cargando && (
+            <>
+              <BotonEnlace href={rutas.ingresar} variante="secundario" tamano="pequeno">
+                {t("navbar.botones.ingresar")}
+              </BotonEnlace>
+              <BotonEnlace
+                href={rutas.registro}
+                variante="primario"
+                tamano="pequeno"
+                className={estilos.soloEscritorio}
+              >
+                {t("navbar.botones.crearCuenta")}
+              </BotonEnlace>
+            </>
+          )}
           <button
             ref={botonMenu}
             type="button"

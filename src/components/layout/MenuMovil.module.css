@@ -65,6 +65,35 @@
   border-top: var(--borde-grosor) solid var(--borde-fuerte);
 }
 
+.cuenta {
+  display: grid;
+  gap: var(--espacio-4);
+  margin-top: auto;
+  padding-top: var(--espacio-4);
+  border-top: var(--borde-grosor) solid var(--borde-fuerte);
+}
+
+.persona {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+}
+
+.datos {
+  min-width: 0;
+}
+
+.nombre {
+  font: var(--tipo-cuerpo-m-fuerte);
+  overflow-wrap: anywhere;
+}
+
+.alias {
+  font: var(--tipo-cuerpo-p);
+  color: var(--texto-secundario);
+  overflow-wrap: anywhere;
+}
+
 @media (min-width: 960px) {
   .menu {
     display: none;

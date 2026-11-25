@@ -15,12 +15,14 @@ import {
   obtenerIdiomasSiHay,
 } from "@/lib/idiomas";
 import { leerPreferencias } from "@/lib/preferencias-servidor";
+import { leerToken } from "@/lib/sesion-servidor";
 import { rubik, unbounded } from "@/styles/fuentes";
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
-  const [preferencias, idiomas] = await Promise.all([
+  const [preferencias, idiomas, token] = await Promise.all([
     leerPreferencias(),
     obtenerIdiomasSiHay(),
+    leerToken(),
   ]);
   const idioma = preferencias.idioma ?? idiomas?.predeterminado ?? IDIOMA_DE_RESPALDO;
   // Si GET /textos falla tras los reintentos, lo atrapa app/global-error.tsx.
@@ -36,7 +38,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             textos={textos}
             consentimiento={preferencias.consentimiento}
           >
-            <ProveedorSesion>
+            <ProveedorSesion haySesion={token !== null}>
               <SaltarAlContenido />
               <GestorCookies />
               <Encabezado />
