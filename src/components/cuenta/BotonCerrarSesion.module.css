@@ -1,0 +1,8 @@
+.error {
+  font: var(--tipo-detalle-nota-fuerte);
+  color: var(--estado-error);
+}
+
+.error:empty {
+  display: none;
+}

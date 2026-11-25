@@ -3,10 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, type ReactNode } from "react";
+import { Avatar } from "@/components/cuenta/Avatar";
+import { BotonCerrarSesion } from "@/components/cuenta/BotonCerrarSesion";
 import { BotonEnlace } from "@/components/ui/Boton";
 import { Etiqueta } from "@/components/ui/Etiqueta";
 import { Icono } from "@/components/ui/Icono";
 import { usePreferencias } from "@/contexto/Preferencias";
+import { useSesion } from "@/contexto/Sesion";
 import { enlacesPrincipales, estaActivo, rutas } from "@/lib/rutas";
 import estilos from "./MenuMovil.module.css";
 
@@ -22,6 +25,7 @@ const ENFOCABLES = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-
 
 export function MenuMovil({ id, abierto, onCerrar, extra }: Props) {
   const { t } = usePreferencias();
+  const { usuario, cargando } = useSesion();
   const rutaActual = usePathname();
   const panel = useRef<HTMLDivElement>(null);
 
@@ -94,24 +98,42 @@ export function MenuMovil({ id, abierto, onCerrar, extra }: Props) {
 
         {extra}
 
-        <div className={estilos.botones}>
-          <BotonEnlace
-            href={rutas.ingresar}
-            variante="secundario"
-            anchoCompleto
-            onClick={() => onCerrar({ devolverFoco: false })}
-          >
-            {t("menuMovil.botones.ingresar")}
-          </BotonEnlace>
-          <BotonEnlace
-            href={rutas.registro}
-            variante="primario"
-            anchoCompleto
-            onClick={() => onCerrar({ devolverFoco: false })}
-          >
-            {t("menuMovil.botones.crearCuenta")}
-          </BotonEnlace>
-        </div>
+        {usuario && (
+          <div className={estilos.cuenta}>
+            <div className={estilos.persona}>
+              <Avatar nombre={usuario.nombre} tamano="grande" />
+              <div className={estilos.datos}>
+                <p className={estilos.nombre}>{usuario.nombre}</p>
+                <p className={estilos.alias}>@{usuario.alias}</p>
+              </div>
+            </div>
+            <BotonCerrarSesion
+              texto={t("menuMovil.botones.cerrarSesion")}
+              alCerrar={() => onCerrar({ devolverFoco: false })}
+            />
+          </div>
+        )}
+
+        {!usuario && !cargando && (
+          <div className={estilos.botones}>
+            <BotonEnlace
+              href={rutas.ingresar}
+              variante="secundario"
+              anchoCompleto
+              onClick={() => onCerrar({ devolverFoco: false })}
+            >
+              {t("menuMovil.botones.ingresar")}
+            </BotonEnlace>
+            <BotonEnlace
+              href={rutas.registro}
+              variante="primario"
+              anchoCompleto
+              onClick={() => onCerrar({ devolverFoco: false })}
+            >
+              {t("menuMovil.botones.crearCuenta")}
+            </BotonEnlace>
+          </div>
+        )}
       </div>
     </div>
   );

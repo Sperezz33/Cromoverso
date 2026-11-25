@@ -9,6 +9,7 @@ import { BotonEnlace } from "@/components/ui/Boton";
 import { Etiqueta } from "@/components/ui/Etiqueta";
 import { Icono } from "@/components/ui/Icono";
 import { usePreferencias } from "@/contexto/Preferencias";
+import { useSesion } from "@/contexto/Sesion";
 import { useListaCompleta, usePeticion } from "@/hooks/usePeticion";
 import { useTituloDePagina } from "@/hooks/useTituloDePagina";
 import { rutas } from "@/lib/rutas";
@@ -21,6 +22,8 @@ const ID_MUNDOS = "mundos";
 /** Los mundos, las rarezas y los cromos se piden a la API desde el navegador. */
 export function VistaInicio() {
   const { t } = usePreferencias();
+  const { usuario, cargando } = useSesion();
+  const esVisitante = !usuario && !cargando;
   useTituloDePagina("inicio");
 
   const mundos = usePeticion<Lista<Mundo>>(rutasApi.mundos);
@@ -43,17 +46,21 @@ export function VistaInicio() {
               {t("paginas.inicio.hero.subtituloMovil")}
             </p>
             <div className={estilos.botones}>
-              <BotonEnlace href={rutas.registro} variante="acento" icono="usuario">
-                {t("paginas.inicio.hero.botones.crearCuentaGratis")}
-              </BotonEnlace>
+              {esVisitante && (
+                <BotonEnlace href={rutas.registro} variante="acento" icono="usuario">
+                  {t("paginas.inicio.hero.botones.crearCuentaGratis")}
+                </BotonEnlace>
+              )}
               <BotonEnlace href={`#${ID_MUNDOS}`} variante="secundario" icono="cartas">
                 {t("paginas.inicio.hero.botones.explorarMundos")}
               </BotonEnlace>
             </div>
-            <p className={`${estilos.nota} ${estilos.soloEscritorio}`}>
-              <Icono nombre="destellos" tamano="pequeno" />
-              {t("paginas.inicio.hero.subtitulo")}
-            </p>
+            {esVisitante && (
+              <p className={`${estilos.nota} ${estilos.soloEscritorio}`}>
+                <Icono nombre="destellos" tamano="pequeno" />
+                {t("paginas.inicio.hero.subtitulo")}
+              </p>
+            )}
           </div>
 
           <AbanicoCromos

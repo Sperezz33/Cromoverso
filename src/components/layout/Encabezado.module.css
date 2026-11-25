@@ -82,14 +82,22 @@
     gap: var(--espacio-3);
   }
 
+  /* Con .acciones pesa más que el display del propio botón. */
   .navegacion,
-  .soloEscritorio {
+  .acciones .soloEscritorio {
     display: none;
   }
 
   .botonMenu {
     display: grid;
   }
+}
+
+.cuentaCargando {
+  width: var(--alto-control-pequeno);
+  height: var(--alto-control-pequeno);
+  border-radius: var(--radio-pildora);
+  background: var(--fondo-sutil);
 }
 
 .idiomaMovil {
