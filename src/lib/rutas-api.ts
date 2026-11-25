@@ -9,6 +9,7 @@ export const rutasApi = {
   mundos: "/mundos",
   mundo: (id: string) => `/mundos/${encodeURIComponent(id)}`,
   rarezas: "/rarezas",
+  cromo: (id: string) => `/cromos/${encodeURIComponent(id)}`,
   cromos: (filtros: FiltrosCromos) => {
     const parametros = new URLSearchParams();
     for (const [clave, valor] of Object.entries(filtros)) {

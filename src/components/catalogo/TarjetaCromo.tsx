@@ -22,7 +22,7 @@ export function numeroDeCromo(numero: number) {
   return String(numero).padStart(3, "0");
 }
 
-/** Carta de un cromo. Enlaza a su detalle (vista 3, sprint 2), que aún no se precarga. */
+/** Carta de un cromo. Enlaza a su detalle (vista 3). */
 export function TarjetaCromo({
   cromo,
   rareza,
@@ -63,7 +63,7 @@ export function TarjetaCromo({
   return (
     <Link
       href={rutas.cromo(cromo.id)}
-      prefetch={false}
+
       className={`${clases} ${estilos.enlace}`}
     >
       {contenido}

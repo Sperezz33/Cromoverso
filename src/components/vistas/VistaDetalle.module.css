@@ -1,0 +1,220 @@
+.fondo {
+  display: grid;
+  flex: 1;
+  justify-items: center;
+  align-items: start;
+  padding: var(--espacio-7) var(--margen-pagina-movil);
+  background: var(--fondo-inverso);
+}
+
+.panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--ancho-carta-detalle) minmax(0, 1fr);
+  grid-template-areas:
+    "carta encabezado"
+    "carta contenido";
+  grid-template-rows: auto 1fr;
+  align-items: start;
+  gap: var(--espacio-4) var(--espacio-6);
+  width: 100%;
+  max-width: var(--ancho-panel-detalle);
+  padding: var(--espacio-6);
+  border-radius: var(--radio-xl);
+  background: var(--fondo-superficie);
+  box-shadow: var(--sombra-flotante);
+}
+
+.cerrar {
+  position: absolute;
+  top: var(--espacio-5);
+  right: var(--espacio-5);
+  display: grid;
+  place-items: center;
+  width: var(--alto-control);
+  height: var(--alto-control);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  background: var(--fondo-superficie);
+}
+
+.cerrar:hover {
+  background: var(--marca-primario-suave);
+}
+
+.cerrar:focus-visible,
+.vecino:focus-visible {
+  outline: var(--grosor-foco) solid var(--marca-primario);
+  outline-offset: var(--separacion-foco);
+}
+
+.carta {
+  grid-area: carta;
+  padding: var(--espacio-6);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-l);
+  background: var(--color-cromo);
+}
+
+.encabezado {
+  grid-area: encabezado;
+  display: grid;
+  gap: var(--espacio-3);
+  min-width: 0;
+}
+
+.etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+  padding-right: var(--espacio-8);
+}
+
+.ubicacion {
+  font: var(--tipo-detalle-nota-fuerte);
+  color: var(--texto-secundario);
+}
+
+.nombre {
+  font: var(--tipo-titular-h1);
+  letter-spacing: var(--espaciado-titular-h1);
+  overflow-wrap: anywhere;
+}
+
+.contenido {
+  grid-area: contenido;
+  display: grid;
+  gap: var(--espacio-4);
+  min-width: 0;
+}
+
+.poder {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-4);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-l);
+  background: var(--marca-primario-suave);
+}
+
+.simbolo {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: var(--tamano-insignia-mundo);
+  height: var(--tamano-insignia-mundo);
+  border-radius: var(--radio-pildora);
+  background: var(--marca-primario);
+  color: var(--texto-inverso);
+}
+
+.tituloPoder {
+  font: var(--tipo-detalle-etiqueta);
+  letter-spacing: var(--espaciado-detalle-etiqueta);
+  text-transform: uppercase;
+  color: var(--texto-marca);
+}
+
+.textoPoder {
+  font: var(--tipo-cuerpo-m-fuerte);
+}
+
+.descripcion {
+  font: var(--tipo-cuerpo-m);
+  color: var(--texto-secundario);
+}
+
+.atributos {
+  display: grid;
+  gap: var(--espacio-3);
+  padding: var(--espacio-4) var(--espacio-5);
+  border-radius: var(--radio-l);
+  background: var(--fondo-sutil);
+}
+
+.cabeceraAtributos {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+}
+
+.tituloAtributos {
+  font: var(--tipo-titular-h4);
+}
+
+.total {
+  font: var(--tipo-cuerpo-p);
+}
+
+.barras {
+  display: grid;
+  gap: var(--espacio-3);
+}
+
+.escala {
+  font: var(--tipo-detalle-nota);
+  color: var(--texto-secundario);
+}
+
+.vecinos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-3);
+}
+
+.vecino {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  min-height: var(--alto-control-pequeno);
+  border-radius: var(--radio-s);
+  font: var(--tipo-cuerpo-p-fuerte);
+  color: var(--texto-marca);
+  text-decoration: none;
+}
+
+.vecino:hover {
+  text-decoration: underline;
+}
+
+.siguiente {
+  margin-left: auto;
+}
+
+@media (max-width: 767px) {
+  .fondo {
+    padding: var(--espacio-7) 0 0;
+  }
+
+  .panel {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "carta encabezado"
+      "contenido contenido";
+    gap: var(--espacio-4);
+    padding: var(--espacio-8) var(--margen-pagina-movil) var(--espacio-6);
+    border-radius: var(--radio-xl) var(--radio-xl) 0 0;
+  }
+
+  .cerrar {
+    top: var(--espacio-3);
+    right: var(--margen-pagina-movil);
+  }
+
+  .carta {
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+
+  .etiquetas {
+    padding-right: 0;
+  }
+
+  .nombre {
+    font: var(--tipo-titular-h3);
+    letter-spacing: normal;
+  }
+}

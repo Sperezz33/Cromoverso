@@ -1,0 +1,30 @@
+.fila {
+  display: grid;
+  grid-template-columns: var(--ancho-nombre-atributo) minmax(0, 1fr) var(--espacio-5);
+  align-items: center;
+  gap: var(--espacio-3);
+}
+
+.nombre {
+  font: var(--tipo-cuerpo-p-fuerte);
+}
+
+.barra {
+  height: var(--alto-barra-atributo);
+  overflow: hidden;
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  background: var(--fondo-superficie);
+}
+
+.relleno {
+  display: block;
+  width: var(--porcentaje);
+  height: 100%;
+  background: var(--color-cromo, var(--marca-primario));
+}
+
+.valor {
+  font: var(--tipo-cuerpo-m-fuerte);
+  text-align: right;
+}

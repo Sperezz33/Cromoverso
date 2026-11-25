@@ -216,6 +216,11 @@
   --ancho-aviso-cookies: 880px;
   /* No viene de Figma: alto reservado mientras la API entrega las cartas. */
   --alto-minimo-abanico: 260px;
+  /* Detalle de un cromo (Sprint 2). */
+  --ancho-panel-detalle: 994px;
+  --ancho-carta-detalle: 316px;
+  --ancho-nombre-atributo: 80px;
+  --alto-barra-atributo: 14px;
   --tamano-icono: 20px;
   --tamano-icono-pequeno: 16px;
   --tamano-icono-grande: 24px;
