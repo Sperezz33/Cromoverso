@@ -1,0 +1,20 @@
+.contenido {
+  display: contents;
+}
+
+.bloque {
+  display: block;
+  border-radius: var(--radio-m);
+  background: var(--borde-sutil);
+  animation: pulso var(--duracion-pulso) ease-in-out infinite alternate;
+}
+
+@keyframes pulso {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.5;
+  }
+}

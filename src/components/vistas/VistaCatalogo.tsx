@@ -6,6 +6,7 @@ import { FiltrosActivos } from "@/components/catalogo/FiltrosActivos";
 import { FiltrosMovil } from "@/components/catalogo/FiltrosMovil";
 import { InsigniaRareza } from "@/components/catalogo/InsigniaRareza";
 import { numeroDeCromo, TarjetaCromo } from "@/components/catalogo/TarjetaCromo";
+import { EsqueletoCartas } from "@/components/estados/EsqueletoCatalogo";
 import { Estado } from "@/components/estados/Estado";
 import { EstadoPeticiones } from "@/components/estados/EstadoPeticiones";
 import { BotonEnlace } from "@/components/ui/Boton";
@@ -240,11 +241,11 @@ export function VistaCatalogo({ mundo, mundos, rarezas, tipos, cromos, filtros }
           />
 
           {!cromos.datos ? (
-            <EstadoPeticiones peticiones={[cromos]} />
+            <EstadoPeticiones peticiones={[cromos]} cargando={<EsqueletoCartas />} />
           ) : cromos.datos.datos.length === 0 ? (
             <Estado
               icono="filtro"
-              titulo={t(`${base}.vacio.titulo`)}
+              titulo={t("estados.vacio.titulo")}
               texto={t(`${base}.vacio.texto`)}
             >
               <BotonEnlace href={rutas.mundo(mundo.id)} variante="secundario">

@@ -1,6 +1,7 @@
 "use client";
 
 import { notFound, useSearchParams } from "next/navigation";
+import { EsqueletoCatalogo } from "@/components/estados/EsqueletoCatalogo";
 import { EstadoPeticiones } from "@/components/estados/EstadoPeticiones";
 import { usePreferencias } from "@/contexto/Preferencias";
 import { useListaCompleta, usePeticion } from "@/hooks/usePeticion";
@@ -33,9 +34,11 @@ export function CatalogoDeMundo({ id }: Props) {
 
   if (!mundo.datos || !mundos.datos || !rarezas.datos) {
     return (
-      <div className="contenedor">
-        <EstadoPeticiones peticiones={[mundo, mundos, rarezas]} nivel="h1" />
-      </div>
+      <EstadoPeticiones
+        peticiones={[mundo, mundos, rarezas]}
+        nivel="h1"
+        cargando={<EsqueletoCatalogo />}
+      />
     );
   }
 
