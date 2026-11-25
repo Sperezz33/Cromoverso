@@ -1,5 +1,5 @@
-import { obtenerIdiomas } from "./api";
-import { IDIOMAS_VALIDOS } from "./cookies";
+import { obtenerIdiomas } from "./api-servidor";
+import { esIdioma } from "./cookies";
 import { buscarTexto } from "./textos";
 import type { IdIdioma, Idioma, RespuestaIdiomas, Textos } from "./tipos";
 
@@ -18,8 +18,9 @@ export async function obtenerIdiomasSiHay(): Promise<RespuestaIdiomas | null> {
 
 /** Opciones del selector desde textos.idioma.opciones cuando GET /idiomas no responde. */
 export function idiomasDesdeTextos(textos: Textos): Idioma[] {
-  return IDIOMAS_VALIDOS.map((codigo) => {
-    const nombre = buscarTexto(textos, `idioma.opciones.${codigo}`);
-    return { codigo, nombre: typeof nombre === "string" ? nombre : codigo };
-  });
+  const opciones = buscarTexto(textos, "idioma.opciones");
+  if (!opciones || typeof opciones === "string") return [];
+  return Object.entries(opciones).flatMap(([codigo, nombre]) =>
+    esIdioma(codigo) && typeof nombre === "string" ? [{ codigo, nombre }] : [],
+  );
 }

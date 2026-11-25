@@ -4,15 +4,8 @@ export type Idioma = { codigo: IdIdioma; nombre: string };
 
 export type RespuestaIdiomas = { predeterminado: IdIdioma; datos: Idioma[] };
 
-export type IdRareza = "comun" | "rara" | "epica" | "legendaria";
-
-export type TipoCromo = "heroe" | "aliado" | "villano";
-
-/** Valores que acepta el filtro `tipo` de GET /cromos (contrato, vista 2). */
-export const TIPOS_DE_CROMO: readonly TipoCromo[] = ["heroe", "aliado", "villano"];
-
 export type Rareza = {
-  id: IdRareza;
+  id: string;
   nombre: string;
   icono: string;
   color: string;
@@ -29,7 +22,7 @@ export type Mundo = {
   descripcion: string;
   figura: string;
   totalCromos: number;
-  porRareza: Record<IdRareza, number>;
+  porRareza: Record<string, number>;
 };
 
 export type Cromo = {
@@ -39,8 +32,8 @@ export type Cromo = {
   mundo: string;
   mundoNombre: string;
   posicion: number | null;
-  rareza: IdRareza;
-  tipo: TipoCromo;
+  rareza: string;
+  tipo: string;
   holografico: boolean;
   edicion: "album" | "especial";
   atributos: { fuerza: number; velocidad: number; mente: number; energia: number };

@@ -13,7 +13,7 @@ type Props = {
 
 /** La rareza siempre se muestra con su icono y su palabra (GET /rarezas), nunca solo con color. */
 export function InsigniaRareza({ rareza, forma = "chip", extra, className }: Props) {
-  const estilo = { "--color-rareza": `var(--rareza-${rareza.id})` } as CSSProperties;
+  const estilo = { "--color-rareza": rareza.color } as CSSProperties;
   return (
     <span
       className={[estilos.insignia, estilos[forma], className].filter(Boolean).join(" ")}

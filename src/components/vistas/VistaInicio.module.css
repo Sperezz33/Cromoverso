@@ -58,6 +58,8 @@
   display: flex;
   justify-content: center;
   padding-top: var(--espacio-6);
+  /* Reserva el alto de las cartas mientras llegan de la API. */
+  min-height: calc(var(--ancho-tarjeta-mundo) * 1.3);
 }
 
 .carta {

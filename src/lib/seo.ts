@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { obtenerTextos } from "./api";
+import { obtenerTextos } from "./api-servidor";
 import { IDIOMA_DE_RESPALDO, obtenerIdiomasSiHay } from "./idiomas";
 import { leerPreferencias } from "./preferencias-servidor";
 import { traducir, type Valores } from "./textos";

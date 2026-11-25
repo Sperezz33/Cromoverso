@@ -1,5 +1,5 @@
 import { notFound, redirect } from "next/navigation";
-import { obtenerMundos } from "@/lib/api";
+import { obtenerMundos } from "@/lib/api-servidor";
 import { rutas } from "@/lib/rutas";
 
 /** "Mundos" en la navegación lleva al catálogo del primer mundo que entrega la API. */
