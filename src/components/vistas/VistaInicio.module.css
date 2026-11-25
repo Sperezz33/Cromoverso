@@ -126,11 +126,26 @@
   gap: var(--espacio-4);
 }
 
+.legendarios {
+  padding-bottom: var(--espacio-8);
+}
+
+.listaLegendarios {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--espacio-4);
+  margin-top: var(--espacio-5);
+}
+
 .soloMovil {
   display: none;
 }
 
 @media (max-width: 1199px) {
+  .listaLegendarios {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
   .listaMundos {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -170,7 +185,8 @@
     padding-block: var(--espacio-6);
   }
 
-  .listaMundos {
+  .listaMundos,
+  .listaLegendarios {
     grid-auto-flow: column;
     grid-template-columns: none;
     grid-auto-columns: minmax(calc(var(--ancho-tarjeta-mundo) * 0.85), 1fr);
@@ -180,7 +196,8 @@
     margin-inline: calc(-1 * var(--espacio-1));
   }
 
-  .listaMundos > li {
+  .listaMundos > li,
+  .listaLegendarios > li {
     scroll-snap-align: start;
   }
 }

@@ -17,14 +17,25 @@ type Props = {
   rarezas: Rareza[];
   /** Cromos holográficos para el abanico de la portada (puede venir vacío). */
   destacados: Cromo[];
+  /** Cromos legendarios de todos los mundos (puede venir vacío). */
+  legendarios: Cromo[];
+  /** paginacion.total de GET /cromos?rareza=legendaria. */
+  totalLegendarios: number;
 };
 
 const ID_MUNDOS = "mundos";
 
-export function VistaInicio({ mundos, rarezas, destacados }: Props) {
+export function VistaInicio({
+  mundos,
+  rarezas,
+  destacados,
+  legendarios,
+  totalLegendarios,
+}: Props) {
   const { t } = usePreferencias();
   useTituloDePagina("inicio");
   const primerMundo = mundos[0];
+  const rarezaLegendaria = rarezas.find((rareza) => rareza.id === "legendaria");
 
   return (
     <>
@@ -115,6 +126,28 @@ export function VistaInicio({ mundos, rarezas, destacados }: Props) {
           </ul>
         </div>
       </section>
+      {legendarios.length > 0 && (
+        <section className={estilos.legendarios} aria-labelledby="titulo-legendarios">
+          <div className="contenedor">
+            <h2 id="titulo-legendarios" className={estilos.tituloSeccion}>
+              {t("paginas.ranking.tabla.etiquetas.legendarias", {
+                cantidad: totalLegendarios,
+              })}
+            </h2>
+            <ul className={estilos.listaLegendarios}>
+              {legendarios.map((cromo) => (
+                <li key={cromo.id}>
+                  <TarjetaCromo
+                    cromo={cromo}
+                    rareza={rarezaLegendaria}
+                    tamano="mediano"
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
     </>
   );
 }

@@ -13,6 +13,8 @@ type Props = {
   rareza?: Rareza;
   /** Sin enlace en el abanico decorativo del inicio. */
   conEnlace?: boolean;
+  /** Tamaño del nombre con los tokens --tipo-cromo-nombre-p/m/g. */
+  tamano?: "pequeno" | "mediano" | "grande";
   className?: string;
 };
 
@@ -21,7 +23,13 @@ export function numeroDeCromo(numero: number) {
 }
 
 /** Carta de un cromo. Enlaza a su detalle (vista 3, sprint 2). */
-export function TarjetaCromo({ cromo, rareza, conEnlace = true, className }: Props) {
+export function TarjetaCromo({
+  cromo,
+  rareza,
+  conEnlace = true,
+  tamano = "mediano",
+  className,
+}: Props) {
   const { t } = usePreferencias();
   const tipo = t(`paginas.albumMundo.filtros.tipo.opciones.${cromo.tipo}`);
   const descripcion = t("paginas.albumMundo.tarjeta.tipo", {
@@ -41,6 +49,7 @@ export function TarjetaCromo({ cromo, rareza, conEnlace = true, className }: Pro
 
   const clases = [
     estilos.tarjeta,
+    estilos[tamano],
     cromo.holografico ? estilos.holografica : "",
     className,
   ]
