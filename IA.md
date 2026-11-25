@@ -102,7 +102,7 @@ Claude Code explicó la causa y propuso alternativas. Elegí pedir desde el nave
 
 Entre las opciones que planteó Claude Code, elegí armar el contador con textos de la API («6 de 20 cromos»). Claude Code escribió el contador, los chips y «Quitar filtros» (PR #15).
 
-**Error encontrado:** los nombres de las rarezas se quedaban en español al cambiar a inglés, porque `GET /rarezas` no cambia con el idioma. Claude Code lo encontró al buscar los textos de los chips y pasó a usar `componentes.cromo.rarezas` de `GET /textos`.
+**Respuesta equivocada de la IA:** Claude Code también tradujo los nombres de las rarezas al cambiar a inglés y lo presentó como una corrección. Al releer las historias señaló que iba contra S1-04 (la palabra de la rareza sale de `GET /rarezas`) y S1-05 (los datos del catálogo no se traducen). Le pedí deshacerlo, y el cambio se revirtió antes de fusionar el PR.
 
 **Validación:** Claude Code comprobó en el navegador la URL al poner y quitar cada filtro, la apertura directa de `/mundos/coral?rareza=rara`, los textos en español e inglés, el estado vacío y la vista de 390 px.
 
