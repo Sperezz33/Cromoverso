@@ -5,6 +5,7 @@ import { useId } from "react";
 import { Icono } from "@/components/ui/Icono";
 import { usePreferencias } from "@/contexto/Preferencias";
 import { enlaceConFiltros, type Filtros } from "@/lib/filtros";
+import { nombreDeRareza } from "@/lib/rarezas";
 import type { Rareza } from "@/lib/tipos";
 import estilos from "./FiltrosMovil.module.css";
 
@@ -17,7 +18,7 @@ type Props = {
 
 /** En móvil los filtros son dos listas desplegables; el cambio también va a la URL. */
 export function FiltrosMovil({ idMundo, rarezas, tipos, filtros }: Props) {
-  const { t } = usePreferencias();
+  const { t, textos } = usePreferencias();
   const router = useRouter();
   const idRareza = useId();
   const idTipo = useId();
@@ -41,7 +42,9 @@ export function FiltrosMovil({ idMundo, rarezas, tipos, filtros }: Props) {
           <option value="">{t("paginas.albumMundo.filtros.rareza.todas")}</option>
           {rarezas.map((rareza) => (
             <option key={rareza.id} value={rareza.id}>
-              {t("paginas.albumMundo.filtros.rareza.valor", { rareza: rareza.nombre })}
+              {t("paginas.albumMundo.filtros.rareza.valor", {
+                rareza: nombreDeRareza(textos, rareza),
+              })}
             </option>
           ))}
         </select>

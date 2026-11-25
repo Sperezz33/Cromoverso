@@ -1,5 +1,9 @@
+"use client";
+
 import type { CSSProperties } from "react";
 import { Icono } from "@/components/ui/Icono";
+import { usePreferencias } from "@/contexto/Preferencias";
+import { nombreDeRareza } from "@/lib/rarezas";
 import type { Rareza } from "@/lib/tipos";
 import estilos from "./InsigniaRareza.module.css";
 
@@ -13,6 +17,7 @@ type Props = {
 
 /** La rareza siempre se muestra con su icono y su palabra (GET /rarezas), nunca solo con color. */
 export function InsigniaRareza({ rareza, forma = "chip", extra, className }: Props) {
+  const { textos } = usePreferencias();
   const estilo = { "--color-rareza": rareza.color } as CSSProperties;
   return (
     <span
@@ -22,7 +27,7 @@ export function InsigniaRareza({ rareza, forma = "chip", extra, className }: Pro
       <span className={estilos.icono}>
         <Icono nombre={rareza.icono} tamano="pequeno" />
       </span>
-      <span>{rareza.nombre}</span>
+      <span>{nombreDeRareza(textos, rareza)}</span>
       {extra && <span className={estilos.extra}>{extra}</span>}
     </span>
   );
