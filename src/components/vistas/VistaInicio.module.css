@@ -185,11 +185,8 @@
     padding-block: var(--espacio-6);
   }
 
+  .listaMundos,
   .listaLegendarios {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .listaMundos {
     grid-auto-flow: column;
     grid-template-columns: none;
     grid-auto-columns: minmax(calc(var(--ancho-tarjeta-mundo) * 0.85), 1fr);
@@ -199,7 +196,8 @@
     margin-inline: calc(-1 * var(--espacio-1));
   }
 
-  .listaMundos > li {
+  .listaMundos > li,
+  .listaLegendarios > li {
     scroll-snap-align: start;
   }
 }

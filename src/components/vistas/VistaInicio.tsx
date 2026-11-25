@@ -19,11 +19,19 @@ type Props = {
   destacados: Cromo[];
   /** Cromos legendarios de todos los mundos (puede venir vacío). */
   legendarios: Cromo[];
+  /** paginacion.total de GET /cromos?rareza=legendaria. */
+  totalLegendarios: number;
 };
 
 const ID_MUNDOS = "mundos";
 
-export function VistaInicio({ mundos, rarezas, destacados, legendarios }: Props) {
+export function VistaInicio({
+  mundos,
+  rarezas,
+  destacados,
+  legendarios,
+  totalLegendarios,
+}: Props) {
   const { t } = usePreferencias();
   useTituloDePagina("inicio");
   const primerMundo = mundos[0];
@@ -123,7 +131,7 @@ export function VistaInicio({ mundos, rarezas, destacados, legendarios }: Props)
           <div className="contenedor">
             <h2 id="titulo-legendarios" className={estilos.tituloSeccion}>
               {t("paginas.ranking.tabla.etiquetas.legendarias", {
-                cantidad: legendarios.length,
+                cantidad: totalLegendarios,
               })}
             </h2>
             <ul className={estilos.listaLegendarios}>
