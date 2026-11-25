@@ -6,6 +6,7 @@ export const rutas = {
   cromo: (id: string) => `/cromos/${encodeURIComponent(id)}`,
   ingresar: "/ingresar",
   registro: "/registro",
+  recuperar: "/recuperar",
 } as const;
 
 /** Enlaces de la navegación principal. `clave` es la clave del texto en la API. */

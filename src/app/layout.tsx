@@ -7,6 +7,7 @@ import { Pie } from "@/components/layout/Pie";
 import { ID_CONTENIDO, SaltarAlContenido } from "@/components/layout/SaltarAlContenido";
 import { ProveedorApi } from "@/contexto/Api";
 import { ProveedorPreferencias } from "@/contexto/Preferencias";
+import { ProveedorSesion } from "@/contexto/Sesion";
 import { configuracionApi, obtenerTextos } from "@/lib/api-servidor";
 import {
   IDIOMA_DE_RESPALDO,
@@ -35,13 +36,15 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             textos={textos}
             consentimiento={preferencias.consentimiento}
           >
-            <SaltarAlContenido />
-            <GestorCookies />
-            <Encabezado />
-            <main id={ID_CONTENIDO} tabIndex={-1}>
-              {children}
-            </main>
-            <Pie />
+            <ProveedorSesion>
+              <SaltarAlContenido />
+              <GestorCookies />
+              <Encabezado />
+              <main id={ID_CONTENIDO} tabIndex={-1}>
+                {children}
+              </main>
+              <Pie />
+            </ProveedorSesion>
           </ProveedorPreferencias>
         </ProveedorApi>
       </body>

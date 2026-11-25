@@ -1,5 +1,6 @@
 "use client";
 
+import { AbanicoCromos } from "@/components/catalogo/AbanicoCromos";
 import { InsigniaRareza } from "@/components/catalogo/InsigniaRareza";
 import { TarjetaCromo } from "@/components/catalogo/TarjetaCromo";
 import { TarjetaMundo } from "@/components/catalogo/TarjetaMundo";
@@ -17,9 +18,6 @@ import estilos from "./VistaInicio.module.css";
 
 const ID_MUNDOS = "mundos";
 
-/** Cartas que caben en el abanico de la portada según el diseño. */
-const CARTAS_DEL_ABANICO = 3;
-
 /** Los mundos, las rarezas y los cromos se piden a la API desde el navegador. */
 export function VistaInicio() {
   const { t } = usePreferencias();
@@ -32,9 +30,6 @@ export function VistaInicio() {
   const primerMundo = mundos.datos?.datos[0];
   const rarezaDe = (id: string) =>
     rarezas.datos?.datos.find((rareza) => rareza.id === id);
-  const destacados = legendarios.datos?.datos
-    .filter((cromo) => cromo.holografico)
-    .slice(0, CARTAS_DEL_ABANICO);
 
   return (
     <>
@@ -61,27 +56,15 @@ export function VistaInicio() {
             </p>
           </div>
 
-          <div className={estilos.abanico}>
-            {destacados && destacados.length > 0 && (
-              <>
-                <Etiqueta
-                  variante="acento"
-                  icono="destellos"
-                  className={estilos.guardiana}
-                >
-                  {t("paginas.inicio.hero.etiquetas.guardiana")}
-                </Etiqueta>
-                {destacados.map((cromo) => (
-                  <TarjetaCromo
-                    key={cromo.id}
-                    cromo={cromo}
-                    conEnlace={false}
-                    className={estilos.carta}
-                  />
-                ))}
-              </>
-            )}
-          </div>
+          <AbanicoCromos
+            className={estilos.abanico}
+            cromos={legendarios.datos?.datos}
+            etiqueta={
+              <Etiqueta variante="acento" icono="destellos" className={estilos.guardiana}>
+                {t("paginas.inicio.hero.etiquetas.guardiana")}
+              </Etiqueta>
+            }
+          />
         </div>
       </section>
 

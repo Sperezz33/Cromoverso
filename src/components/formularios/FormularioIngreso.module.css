@@ -1,0 +1,39 @@
+.formulario {
+  display: grid;
+  gap: var(--espacio-4);
+}
+
+.opciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+}
+
+.casilla {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  min-height: var(--espacio-5);
+  font: var(--tipo-cuerpo-p);
+  cursor: pointer;
+}
+
+.casilla input {
+  width: var(--tamano-icono);
+  height: var(--tamano-icono);
+  margin: 0;
+  accent-color: var(--marca-primario);
+}
+
+.enlace {
+  border-radius: var(--radio-s);
+  font: var(--tipo-cuerpo-p-fuerte);
+  color: var(--texto-marca);
+}
+
+.sinCuenta {
+  font: var(--tipo-cuerpo-p);
+  text-align: center;
+}

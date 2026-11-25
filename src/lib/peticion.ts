@@ -16,14 +16,15 @@ export class ErrorApi extends Error {
   }
 }
 
-async function pedirUnaVez<T>(
+/** Una sola petición, sin reintentos (por ejemplo, POST /sesion). */
+export async function pedirUnaVez<T>(
   api: ConfiguracionApi,
   ruta: string,
   opciones: RequestInit,
 ): Promise<T> {
   const respuesta = await fetch(`${api.base}${ruta}`, {
     ...opciones,
-    headers: { Accept: "application/json", ...api.cabeceras },
+    headers: { Accept: "application/json", ...api.cabeceras, ...opciones.headers },
   });
 
   if (!respuesta.ok) {

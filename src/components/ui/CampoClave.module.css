@@ -1,0 +1,19 @@
+.ojo {
+  display: grid;
+  place-items: center;
+  width: var(--alto-control);
+  height: var(--alto-control);
+  border: 0;
+  border-radius: var(--radio-m);
+  background: none;
+  cursor: pointer;
+}
+
+.ojo:hover {
+  color: var(--texto-marca);
+}
+
+.ojo:focus-visible {
+  outline: var(--grosor-foco) solid var(--marca-primario);
+  outline-offset: calc(-1 * var(--grosor-foco));
+}
